@@ -19,6 +19,8 @@ function App() {
       localStorage.setItem("dashboard_list", JSON.stringify(default_dash));
       localStorage.setItem("dataSources", JSON.stringify(default_source_data));
       localStorage.setItem("hasVisited", "true");
+
+      window.location.reload();
     }
   }, []);
   return (
