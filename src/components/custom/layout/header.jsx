@@ -10,12 +10,12 @@ import { useLocation } from "react-router"
 
 export const Header = () => {
     const location = useLocation();
-    const { layout, components, updateComponent, updateLayout } = useContext(LayoutContext)
+    const { layout, components, updateComponent, saveLayoutToLocal } = useContext(LayoutContext)
     const { alert } = useContext(AlertContext)
 
     const save = () => {
+        saveLayoutToLocal()
         updateComponent(components)
-        updateLayout(layout)
         alert({
             time: 10,
             status: 'success',

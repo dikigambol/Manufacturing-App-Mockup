@@ -7,9 +7,20 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { SheetProvider } from "./contexts/sheet";
 import { SourceProvider } from "./contexts/source";
 import DataSource from "./pages/data-resources";
+import { default_dash, default_source_data } from "./utils/constant";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    const isFirstVisit = localStorage.getItem("hasVisited");
 
+    if (!isFirstVisit) {
+      localStorage.clear();
+      localStorage.setItem("dashboard_list", JSON.stringify(default_dash));
+      localStorage.setItem("dataSources", JSON.stringify(default_source_data));
+      localStorage.setItem("hasVisited", "true");
+    }
+  }, []);
   return (
     <SourceProvider>
       <SheetProvider>

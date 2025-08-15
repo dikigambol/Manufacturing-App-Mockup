@@ -33,13 +33,20 @@ export const LayoutProvider = ({ children }) => {
         dispatch({ type: "SET_ACTIVE_ID", id });
     };
 
-    const updateLayout = (data) => {
+    const saveLayoutToLocal = () => {
         if (!state.activeIdDash) return;
+
         const storedDashboard = local.get("dashboard_list") || [];
         const updatedList = storedDashboard.map((d) =>
-            d.id_dash === state.activeIdDash ? { ...d, layout: data } : d
+            d.id_dash === state.activeIdDash
+                ? { ...d, layout: state.layout }
+                : d
         );
+
         local.save("dashboard_list", updatedList);
+    };
+
+    const updateLayout = (data) => {
         dispatch({ type: "LAYOUT", data });
     };
 
@@ -110,6 +117,7 @@ export const LayoutProvider = ({ children }) => {
                 updateComponent,
                 updateDashboard,
                 ensureDashboardExists,
+                saveLayoutToLocal
             }}
         >
             {children}
