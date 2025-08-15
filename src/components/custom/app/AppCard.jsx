@@ -9,14 +9,14 @@ import { LayoutContext } from "@/contexts/interact";
 import { SheetContext } from "@/contexts/sheet";
 import { SourceContext } from "@/contexts/source";
 import { BadgeX, Lock, LockOpen, Settings, Settings2 } from "lucide-react";
-import { lazy, Suspense, useContext, useMemo } from "react";
+import { lazy, Suspense, useContext, useEffect, useMemo, useState } from "react";
 
 const KPICard = lazy(() => import('./cards/KPICard'));
 const StatCard = lazy(() => import('./cards/StatCard'));
 
 const AppCard = ({ props, elementId }) => {
   const { layout, components, updateLayout, updateComponent } = useContext(LayoutContext)
-  const { setSheetOpen, setSheetProps } = useContext(SheetContext);
+  const { setSheetOpen, setSheetProps, setSheetFormValue } = useContext(SheetContext);
   const { getById } = useContext(SourceContext)
 
   let dataById = {};
@@ -91,6 +91,8 @@ const AppCard = ({ props, elementId }) => {
                   desc: "configuration for data visualitation widget",
                   children: <AppSheetChildren elementId={elementId} props={props} />
                 });
+                setSheetFormValue('card_type', props?.card_type);
+                setSheetFormValue('id_resource_data', props?.id_resource_data);
                 setSheetOpen(true)
               }}>
                 <Settings2 />
@@ -124,12 +126,18 @@ function AppSheetChildren({ props, elementId }) {
   const { components, updateComponent } = useContext(LayoutContext)
   const { sources, getById } = useContext(SourceContext)
 
-  let xData = [];
+  const [xData, setDataX] = useState([]);
 
-  if (props?.id_resource_data || sheetForm?.id_resource_data) {
-    const data = props.id_resource_data ? getById(props.id_resource_data) : getById(sheetForm?.id_resource_data);
-    xData = Object.keys(data.fileData) ?? [];
-  }
+  useEffect(() => {
+    const id = sheetForm?.id_resource_data ?? props?.id_resource_data;
+    if (id) {
+      if (Array.isArray(getById(id)?.fileData)) {
+        setDataX(Object.keys(getById(id)?.fileData[0]) ?? []);
+      } else {
+        setDataX(Object.keys(getById(id)?.fileData) ?? []);
+      }
+    }
+  }, [props.id_resource_data, sheetForm?.id_resource_data]);
 
   const handleSaveSheet = () => {
     const updatedData = components.map(item =>
@@ -155,7 +163,16 @@ function AppSheetChildren({ props, elementId }) {
           <Label htmlFor={elementId}>Data Resource</Label>
           <Select
             defaultValue={props?.id_resource_data ?? ""}
-            onValueChange={(value) => setSheetFormValue("id_resource_data", value)}
+            onValueChange={(value) => {
+              setSheetFormValue("id_resource_data", value);
+              setSheetFormValue("value_kpi", []);
+              setSheetFormValue("subtitle_kpi", []);
+              setSheetFormValue("percentage_kpi", "");
+              setSheetFormValue("data_1", "");
+              setSheetFormValue("title_1", "");
+              setSheetFormValue("data_2", "");
+              setSheetFormValue("title_2", "");
+            }}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select" />
@@ -198,7 +215,7 @@ function AppSheetChildren({ props, elementId }) {
             </SelectContent>
           </Select>
 
-          {(props?.card_type == "kpi" || sheetForm?.card_type == "kpi") &&
+          {['kpi'].includes(sheetForm?.card_type ?? props?.card_type) &&
             <>
               <SheetTitle>Configuration Card</SheetTitle>
               <SheetDescription>Set your card data and type here.</SheetDescription>
@@ -264,7 +281,7 @@ function AppSheetChildren({ props, elementId }) {
             </>
           }
 
-          {(props?.card_type == "stat" || sheetForm?.card_type == "stat") &&
+          {['stat'].includes(sheetForm?.card_type ?? props?.card_type) &&
             <>
               <SheetTitle>Configuration Card</SheetTitle>
               <SheetDescription>Set your card data and type here.</SheetDescription>

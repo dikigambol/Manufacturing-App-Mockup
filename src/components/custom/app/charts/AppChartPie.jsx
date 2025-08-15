@@ -91,38 +91,48 @@ export default function AppChartPieStacked(props) {
             </Badge>
           ))}
         </div>
-
-        <div className="w-full h-[300px]"> {/* Parent height fix */}
-          <ChartContainer config={chartConfig} className="w-full h-full">
-            <ResponsiveContainer width="100%" height="100%" style={{paddingBottom: '20px'}}>
-              <PieChart>
-                <ChartTooltip
-                  content={
-                    <ChartTooltipContent
-                      labelFormatter={(_, payload) => {
-                        if (payload && payload.length > 0) {
-                          const p = payload[0].payload
-                          return `${p.yLabel} - ${p.name}`
-                        }
-                        return ""
-                      }}
-                      valueFormatter={(value) => value?.toLocaleString()}
-                    />
-                  }
+        <ChartContainer config={chartConfig} className="w-full h-full p-0 m-0">
+          <ResponsiveContainer width="100%" height="100%" style={{ paddingBottom: '20px' }}>
+            <PieChart>
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    labelFormatter={(_, payload) => {
+                      if (payload && payload.length > 0) {
+                        const p = payload[0].payload
+                        return `${p.yLabel} - ${p.name}`
+                      }
+                      return ""
+                    }}
+                    valueFormatter={(value) => value?.toLocaleString()}
+                  />
+                }
+              />
+              {props.yData.length === 1 ? (
+                <Pie
+                  data={chartSeries[0]}
+                  dataKey={activeKeys[0]}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={0}
+                  outerRadius="100%"
                 />
-                {chartSeries.map((seriesData, idx) => (
+              ) : (
+                chartSeries.map((seriesData, idx) => (
                   <Pie
                     key={idx}
                     data={seriesData}
                     dataKey={activeKeys[idx]}
+                    cx="50%"
+                    cy="50%"
                     innerRadius={60 + idx * 30}
                     outerRadius={80 + idx * 30}
                   />
-                ))}
-              </PieChart>
-            </ResponsiveContainer>
-          </ChartContainer>
-        </div>
+                ))
+              )}
+            </PieChart>
+          </ResponsiveContainer>
+        </ChartContainer>
       </>
     )
   )

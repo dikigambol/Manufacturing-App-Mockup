@@ -10,7 +10,7 @@ import { SheetContext } from "@/contexts/sheet";
 import { SourceContext } from "@/contexts/source";
 import { local } from "@/utils/access";
 import { BadgeX, Lock, LockOpen, Settings, Settings2 } from "lucide-react";
-import { lazy, Suspense, useContext, useMemo } from "react";
+import { lazy, Suspense, useContext, useEffect, useMemo, useState } from "react";
 import Multiple from "./multipel";
 
 const AppChartBar = lazy(() => import('./charts/AppChartBar'));
@@ -20,7 +20,7 @@ const AppChartGauge = lazy(() => import('./charts/AppChartGauge'));
 
 const Widget = ({ props, elementId }) => {
     const { layout, components, updateLayout, updateComponent } = useContext(LayoutContext)
-    const { setSheetOpen, setSheetProps } = useContext(SheetContext);
+    const { setSheetOpen, setSheetProps, setSheetFormValue } = useContext(SheetContext);
     const { getById } = useContext(SourceContext)
 
     let dataById = {};
@@ -115,6 +115,8 @@ const Widget = ({ props, elementId }) => {
                                     desc: "configuration for data visualitation widget",
                                     children: <AppSheetChildren elementId={elementId} props={props} />
                                 });
+                                setSheetFormValue('chart_type', props?.chart_type);
+                                setSheetFormValue('id_resource_data', props?.id_resource_data);
                                 setSheetOpen(true)
                             }}>
                                 <Settings2 />
@@ -147,20 +149,24 @@ function AppSheetChildren({ props, elementId }) {
     const { sheetForm, setSheetFormValue, setSheetOpen } = useContext(SheetContext);
     const { components, updateComponent } = useContext(LayoutContext)
     const { sources, getById } = useContext(SourceContext)
+    const [xData, setDataX] = useState([]);
+    const [yData, setDataY] = useState([]);
+    const [zData, setDataZ] = useState([]);
 
-    let xData = [];
-    let yData = [];
-    let zData = [];
-
-    if (props?.id_resource_data || sheetForm?.id_resource_data) {
-        const data = props.id_resource_data ? getById(props.id_resource_data) : getById(sheetForm?.id_resource_data);
-        if (Array.isArray(data.fileData)) {
-            xData = Object.keys(data.fileData[0]) ?? [];
-            yData = Object.keys(data.fileData[0]).map((item) => ({ label: item, value: item })) ?? [];
-        } else {
-            zData = Object.keys(data.fileData) ?? [];
+    useEffect(() => {
+        const id = sheetForm?.id_resource_data ?? props?.id_resource_data;
+        if (id) {
+            if (Array.isArray(getById(id)?.fileData)) {
+                setDataX(Object.keys(getById(id)?.fileData[0]) ?? []);
+                setDataY(Object.keys(getById(id)?.fileData[0]).map((item) => ({ label: item, value: item })) ?? []);
+                setDataZ([]);
+            } else {
+                setDataX([]);
+                setDataY([]);
+                setDataZ(Object.keys(getById(id)?.fileData) ?? []);
+            }
         }
-    }
+    }, [props.id_resource_data, sheetForm?.id_resource_data]);
 
     const handleSaveSheet = () => {
         const updatedData = components.map(item =>
@@ -179,6 +185,8 @@ function AppSheetChildren({ props, elementId }) {
         setSheetOpen(false);
     };
 
+    const SAFE_MIN_GAUGE = 66;
+
     return (
         <>
             <div className="flex-1 overflow-y-auto pr-4">
@@ -186,7 +194,13 @@ function AppSheetChildren({ props, elementId }) {
                     <Label htmlFor={elementId}>Data Resource</Label>
                     <Select
                         defaultValue={props?.id_resource_data ?? ""}
-                        onValueChange={(value) => setSheetFormValue("id_resource_data", value)}
+                        onValueChange={(value) => {
+                            setSheetFormValue("id_resource_data", value);
+                            setSheetFormValue("x_data", []);
+                            setSheetFormValue("yData", []);
+                            setSheetFormValue("value_kpi", "");
+                            setSheetFormValue("max_rate", "");
+                        }}
                     >
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select" />
@@ -231,7 +245,7 @@ function AppSheetChildren({ props, elementId }) {
                         </SelectContent>
                     </Select>
 
-                    {(props?.chart_type == 'bar' || props?.chart_type == 'area' || props?.chart_type == 'pie' || sheetForm.chart_type == 'bar' || sheetForm.chart_type == 'area' || sheetForm.chart_type == 'pie') && (
+                    {['bar', 'area', 'pie'].includes(sheetForm?.chart_type ?? props?.chart_type) && (
                         <>
                             <SheetTitle>Configuration Chart</SheetTitle>
                             <SheetDescription>Set your chart data and type here.</SheetDescription>
@@ -266,7 +280,7 @@ function AppSheetChildren({ props, elementId }) {
                         </>
                     )}
 
-                    {(props?.chart_type == 'gauge' || sheetForm.chart_type == 'gauge') && (
+                    {['gauge'].includes(sheetForm?.chart_type ?? props?.chart_type) && (
                         <>
                             <SheetTitle>Configuration Chart</SheetTitle>
                             <SheetDescription>Set your chart data and type here.</SheetDescription>
@@ -296,7 +310,8 @@ function AppSheetChildren({ props, elementId }) {
                                 <Input
                                     id={elementId}
                                     type="number"
-                                    defaultValue={props?.max_rate}
+                                    placeholder="min set max value is 66"
+                                    defaultValue={Math.max(props?.max_rate || SAFE_MIN_GAUGE, SAFE_MIN_GAUGE)}
                                     onChange={(e) => setSheetFormValue("max_rate", e.target.value)}
                                 />
                             </div>

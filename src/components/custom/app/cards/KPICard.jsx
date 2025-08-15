@@ -2,7 +2,6 @@ import { CardContent } from "@/components/ui/card";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 function KPICard({ ...props }) {
-  console.log(props)
   return (
     <CardContent>
       <div className="flex items-center gap-2">

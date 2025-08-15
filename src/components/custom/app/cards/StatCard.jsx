@@ -9,9 +9,6 @@ import {
 import { ChartContainer } from "@/components/ui/chart";
 
 export default function StatCard({ ...props }) {
-
-  console.log(props)
-
   const chartData = [
     { visitors: props?.dataItem.fileData[props?.data_2], fill: "#4966dcff" },
   ];

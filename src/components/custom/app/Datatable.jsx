@@ -9,7 +9,7 @@ import { LayoutContext } from "@/contexts/interact";
 import { SheetContext } from "@/contexts/sheet";
 import { SourceContext } from "@/contexts/source";
 import { BadgeX, Lock, LockOpen, Settings, Settings2 } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Multiple from "./multipel";
 import { local } from "@/utils/access";
 import {
@@ -29,17 +29,21 @@ const Datatable = ({ props, elementId }) => {
   let tableData = [];
 
   if (props?.id_resource_data) {
-    const data = getById(props.id_resource_data);
+    try {
+      const data = getById(props.id_resource_data);
 
-    const selectedFields = props?.displayed_fields.map(f => f.value);
+      const selectedFields = props?.displayed_fields.map(f => f.value);
 
-    const filteredData = data.fileData.map(item =>
-      Object.fromEntries(
-        selectedFields.map(field => [field, item[field]])
-      )
-    );
+      const filteredData = data.fileData.map(item =>
+        Object.fromEntries(
+          selectedFields.map(field => [field, item[field]])
+        )
+      );
 
-    tableData = filteredData;
+      tableData = filteredData;
+    } catch {
+      tableData = []
+    }
   }
 
   const remove = (i) => {
@@ -135,12 +139,18 @@ function AppSheetChildren({ props, elementId }) {
   const { components, updateComponent } = useContext(LayoutContext)
   const { sources, getById } = useContext(SourceContext)
 
-  let yData = [];
+  const [yData, setDataY] = useState([]);
 
-  if (props?.id_resource_data || sheetForm?.id_resource_data) {
-    const data = props.id_resource_data ? getById(props.id_resource_data) : getById(sheetForm?.id_resource_data);
-    yData = Object.keys(data.fileData[0]).map((item) => ({ label: item, value: item }));
-  }
+  useEffect(() => {
+    const id = sheetForm?.id_resource_data ?? props?.id_resource_data;
+    if (id) {
+      if (Array.isArray(getById(id)?.fileData)) {
+        setDataY(Object.keys(getById(id)?.fileData[0]).map((item) => ({ label: item, value: item })) ?? []);
+      } else {
+        setDataY(Object.keys(getById(id)?.fileData).map((item) => ({ label: item, value: item })) ?? []);
+      }
+    }
+  }, [props.id_resource_data, sheetForm?.id_resource_data]);
 
   const handleSaveSheet = () => {
     const updatedData = components.map(item =>
@@ -166,7 +176,10 @@ function AppSheetChildren({ props, elementId }) {
           <Label htmlFor={elementId}>Data Resource</Label>
           <Select
             defaultValue={props?.id_resource_data ?? ""}
-            onValueChange={(value) => setSheetFormValue("id_resource_data", value)}
+            onValueChange={(value) => {
+              setSheetFormValue("id_resource_data", value)
+              setSheetFormValue("displayed_fields", []);
+            }}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select" />
@@ -191,11 +204,10 @@ function AppSheetChildren({ props, elementId }) {
               onChange={(e) => setSheetFormValue("title", e.target.value)}
             />
           </div>
-
           <Label htmlFor={elementId}>Displayed Fields</Label>
           <Multiple
             options={yData}
-            value={props.displayed_fields}
+            value={props?.displayed_fields}
             placeholder='Select Options'
             onSelect={value => setSheetFormValue('displayed_fields', value)}
           />
