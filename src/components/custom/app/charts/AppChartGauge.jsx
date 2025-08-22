@@ -14,19 +14,11 @@ export default function AppChartGauge(props) {
                 value={valueOfKPI}
                 maxValue={Math.max(props?.max_rate || SAFE_MIN_GAUGE, SAFE_MIN_GAUGE)}
                 type="radial"
-                style={{
-                    '--gauge-text-color': 'red', // warna teks
-                }}
+                // className="w-full h-full text-indigo-700"
+                // style={{
+                //     '--text': 'red', // warna teks
+                // }}
             />
-            <style>
-                {`
-                    .radial-gauge text {
-                        fill: unset !important;
-                        text-shadow: unset !important;
-                        color: var(--gauge-text-color);
-                    }
-                `}
-            </style>
         </>
     );
 }

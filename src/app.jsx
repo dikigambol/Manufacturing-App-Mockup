@@ -9,6 +9,7 @@ import { SourceProvider } from "./contexts/source";
 import DataSource from "./pages/data-resources";
 import { default_dash, default_source_data } from "./utils/constant";
 import { useEffect } from "react";
+import { ThemeProvider } from "./contexts/thems";
 
 function App() {
   useEffect(() => {
@@ -24,32 +25,34 @@ function App() {
     }
   }, []);
   return (
-    <SourceProvider>
-      <SheetProvider>
-        <LayoutProvider>
-          <AlertProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route element={<Protected />}>
-                  <Route element={<Dashbaord />} >
-                    <Route path="/" element={<Home />} />
-                    <Route path="/inf-prod" element={<Home />} />
-                    <Route path="/mon-line" element={<Home />} />
-                    <Route path="/qc" element={<Home />} />
-                    <Route path="/mater-inv" element={<Home />} />
-                    <Route path="/mainten" element={<Home />} />
-                    <Route path="/saf-comp" element={<Home />} />
-                    <Route path="/enrg-effcy" element={<Home />} />
-                    <Route path="/opp-perf" element={<Home />} />
-                    <Route path="/data-resources" element={<DataSource />} />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <SourceProvider>
+        <SheetProvider>
+          <LayoutProvider>
+            <AlertProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route element={<Protected />}>
+                    <Route element={<Dashbaord />} >
+                      <Route path="/" element={<Home />} />
+                      <Route path="/inf-prod" element={<Home />} />
+                      <Route path="/mon-line" element={<Home />} />
+                      <Route path="/qc" element={<Home />} />
+                      <Route path="/mater-inv" element={<Home />} />
+                      <Route path="/mainten" element={<Home />} />
+                      <Route path="/saf-comp" element={<Home />} />
+                      <Route path="/enrg-effcy" element={<Home />} />
+                      <Route path="/opp-perf" element={<Home />} />
+                      <Route path="/data-resources" element={<DataSource />} />
+                    </Route>
                   </Route>
-                </Route>
-              </Routes>
-            </BrowserRouter >
-          </AlertProvider>
-        </LayoutProvider>
-      </SheetProvider>
-    </SourceProvider>
+                </Routes>
+              </BrowserRouter >
+            </AlertProvider>
+          </LayoutProvider>
+        </SheetProvider>
+      </SourceProvider>
+    </ThemeProvider>
   )
 }
 

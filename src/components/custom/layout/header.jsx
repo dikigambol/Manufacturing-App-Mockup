@@ -35,18 +35,18 @@ export const Header = () => {
 
     return (
         <header className="flex items-center justify-between py-2">
-            <div className="relative flex h-16 items-center justify-between bg-slate-100/60 rounded-[0.625rem] px-4 w-full">
+            <div className="relative flex h-16 items-center justify-between bg-sidebar rounded-[0.625rem] px-4 w-full">
                 <div className="flex shrink-0 items-center">
                     <SidebarTrigger />
                     {location.pathname != "/data-resources" && <AppCommand />}
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                        <div role="button" className="rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-700 hover:text-white">Team</div>
-                        <div role="button" className="rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-700 hover:text-white">Projects</div>
-                        <div role="button" className="rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-700 hover:text-white">Calendar</div>
+                        <div role="button" className="rounded-md px-3 py-2 text-sm font-medium hover:bg-sidebar-primary hover:text-gray-100">Team</div>
+                        <div role="button" className="rounded-md px-3 py-2 text-sm font-medium hover:bg-sidebar-primary hover:text-gray-100">Projects</div>
+                        <div role="button" className="rounded-md px-3 py-2 text-sm font-medium hover:bg-sidebar-primary hover:text-gray-100">Calendar</div>
                         {location.pathname != "/data-resources" &&
-                            <div role="button" onClick={save} aria-current="page" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white flex items-center gap-2">
+                            <div role="button" onClick={save} aria-current="page" className="rounded-md bg-sidebar-primary text-sidebar-primary-foreground px-3 py-2 text-sm font-medium flex items-center gap-2">
                                 <Save size={16} /> Save
                             </div>
                         }

@@ -83,12 +83,13 @@ function AppChartArea({ ...props }) {
 		// default pilih semua yData
 		setActiveKeys(yKeys);
 
-		// set config warna
+		// set config warna (random)
 		const cfg = {};
 		yKeys.forEach((key, idx) => {
+			const randomColor = colors[Math.floor(Math.random() * colors.length)];
 			cfg[key] = {
 				label: props.yData[idx]?.label || key,
-				color: colors[idx % colors.length]
+				color: randomColor
 			};
 		});
 		setConfig(cfg);

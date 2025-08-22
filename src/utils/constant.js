@@ -1,19 +1,19 @@
 export const colors = [
-  "#FF6384", // pink merah
-  "#36A2EB", // biru
-  "#FFCE56", // kuning
-  "#4BC0C0", // toska
-  "#9966FF", // ungu
-  "#FF9F40", // oranye
-  "#00A36C", // hijau emerald
-  "#C71585", // magenta tua
-  "#4682B4", // steel blue
-  "#FFD700", // gold
-  "#8B0000", // merah tua
-  "#00CED1", // dark turquoise
-  "#ADFF2F", // hijau lime
-  "#FF4500", // oranye merah
-  "#9400D3", // ungu gelap
+  "#4CAF50", // hijau safety
+  "#2196F3", // biru kontras
+  "#FFC107", // kuning terang
+  "#F44336", // merah warning
+  "#9C27B0", // ungu kontras
+  "#FF9800", // oranye tegas
+  "#009688", // teal industrial
+  "#E91E63", // magenta/rose
+  "#795548", // coklat industrial
+  "#3F51B5", // biru navy kontras
+  "#CDDC39", // lime hijau neon
+  "#00BCD4", // cyan terang
+  "#607D8B", // abu kebiruan industrial
+  "#8BC34A", // hijau segar
+  "#FF5722", // oranye kemerahan
 ];
 
 export const default_dash = [

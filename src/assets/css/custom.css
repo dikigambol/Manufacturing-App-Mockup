@@ -73,3 +73,9 @@
 .comment-item {
   padding: 0;
 }
+
+/* Gauge */
+.radial-gauge text {
+  fill: var(--foreground) !important;
+  text-shadow: unset !important;
+}

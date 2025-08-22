@@ -43,7 +43,7 @@ const SidebarMenuLink = ({ item, href }) => {
                 <Link to={item.url} onClick={() => { setOpenMobile(false); ensureDashboardExists(item.id_dash); }}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
-                    {/* {item.badge && <NavBadge>{item.badge}</NavBadge>} */}
+                    {item.badge && <NavBadge>{item.badge}</NavBadge>}
                 </Link>
             </SidebarMenuButton>
         </SidebarMenuItem>

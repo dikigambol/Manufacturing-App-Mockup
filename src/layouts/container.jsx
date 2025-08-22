@@ -85,6 +85,7 @@ export const Container = () => {
                 cols={{ lg: 48, md: 40, sm: 32, xs: 24, xxs: 16 }}
                 rowHeight={6}
                 margin={[8, 8]}
+                containerPadding={[0, 0]}
                 compactType={null}
                 preventCollision={true}
                 resizeHandles={["se", "e", "s"]}

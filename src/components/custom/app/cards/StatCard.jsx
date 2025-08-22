@@ -16,7 +16,7 @@ export default function StatCard({ ...props }) {
   const target = props?.dataItem.fileData[props?.data_1];
   const angleConvert = (chartData[0].visitors / target) * 360
   return (
-    <div className="px-3 w-[250px]">
+    <div className="px-3 ">
       {/* Bagian KPI Target & Actual */}
       <div className="flex justify-between">
         <div>

@@ -3,11 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { SourceContext } from "@/contexts/source"
 import { Pie, PieChart, ResponsiveContainer } from "recharts"
-
-const colors = [
-  "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF",
-  "#FF9F40", "#00A36C", "#C71585", "#4682B4", "#FFD700"
-]
+import { colors } from "@/utils/constant"
 
 export default function AppChartPieStacked(props) {
   const { getById } = useContext(SourceContext)
