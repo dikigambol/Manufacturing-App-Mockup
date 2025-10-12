@@ -34,6 +34,12 @@ Sidebar telah direorganisasi untuk memberikan navigasi yang lebih intuitif dan t
 └─────────────────────────────────────┘
 
 ┌─────────────────────────────────────┐
+│  🗃️ Master Data                     │
+│  ├── Machines                       │ → /master-data/machines
+│  └── Spareparts                     │ → /master-data/spareparts
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
 │  ⚙️ Management                      │
 │  ├── Data Resources                 │ → /data-resources
 │  └── Settings                       │ → /settings
@@ -84,7 +90,49 @@ Sidebar telah direorganisasi untuk memberikan navigasi yang lebih intuitif dan t
 
 ---
 
-## ⚙️ Section 3: Management
+## 🗃️ Section 3: Master Data
+
+**Purpose**: Manage manufacturing master data (engines and spareparts)
+
+| Menu Item | URL | Icon | Description |
+|-----------|-----|------|-------------|
+| Machines | `/master-data/machines` | Cog | Manage machine/engine master data |
+| Spareparts | `/master-data/spareparts` | Wrench | Manage spareparts inventory |
+
+**Features**:
+- Add/Edit/Delete machines (engines)
+- Manage machine specifications and details
+- Add/Edit/Delete spareparts
+- Track sparepart stock and compatibility
+- Link machines to spareparts
+- Upload machine and sparepart images
+- Search and filter master data
+
+**Data Fields**:
+
+**Machines**:
+- Machine ID (unique identifier)
+- Name
+- Asset Number
+- Acquisition Year
+- Machine Type
+- Specifications
+- Status (Active/Inactive/Maintenance)
+- Image
+
+**Spareparts**:
+- Part Number (unique identifier)
+- Part Name
+- Specification
+- Brand
+- Type
+- Stock quantity
+- Image
+- Machine Compatibility (array of machine IDs)
+
+---
+
+## ⚙️ Section 4: Management
 
 **Purpose**: System configuration and data management
 
@@ -118,6 +166,13 @@ When user clicks on a dashboard view:
 3. Show view name in header
 4. Use shared dashboard infrastructure
 
+### For Master Data Pages
+When user clicks on master data items:
+1. Navigate to master data page
+2. Show table-based UI with search and CRUD operations
+3. No dashboard grid (custom page layout)
+4. Display appropriate form modals for Add/Edit
+
 ### For Management Pages
 When user clicks on management items:
 1. Navigate to management page
@@ -133,14 +188,16 @@ When user clicks on management items:
 | 1 | Line Dashboard | Line 1 - Engine Assembly |
 | 2 | Line Dashboard | Line 2 - Quality Control |
 | 3 | Line Dashboard | Line 3 - Packaging |
-| 4 | Dashboard View | Production Info |
-| 5 | Dashboard View | Line Monitoring |
-| 6 | Dashboard View | Quality Control |
+| 4 | Dashboard Option 1 | Main Dashboard - Engine Assembly Monitoring |
+| 5 | Dashboard Option 2 | Main Dashboard - Detail Mesin & Produksi |
+| 6 | Machine Detail | Machine Detail Dashboard |
 | 7 | Dashboard View | Material & Inventory |
 | 8 | Dashboard View | Maintenance |
 | 9 | Dashboard View | Safety & Compliance |
 | 10 | Dashboard View | Energy & Efficiency |
 | 11 | Dashboard View | Operator Performance |
+
+**Note**: Dashboard IDs 4, 5, 6 are reserved for new dashboard implementations from DEVELOPMENT_PLAN.md
 
 ---
 
@@ -209,7 +266,33 @@ User → Login
      → Switch between different analytical views
 ```
 
-### Scenario 3: Data Management
+### Scenario 3: Master Data Management
+```
+User → Login
+     → Click "Machines" from sidebar
+     → View all machines in table format
+     → Click "Add" to create new machine
+     → Fill machine details and upload image
+     → Save machine to master data
+     → Navigate to "Spareparts"
+     → Link spareparts to machines
+     → Return to dashboard
+```
+
+### Scenario 4: Line Configuration
+```
+User → Login
+     → Navigate to Line Selection page
+     → Click "Configure" button on Line 1
+     → Open Line Configuration Modal
+     → Tab 1: Drag machines from Master Data to layout
+     → Tab 2: Configure dashboard widgets
+     → Tab 3: Set line parameters
+     → Save configuration
+     → View configured dashboard
+```
+
+### Scenario 5: Data Management
 ```
 User → Login
      → Click "Data Resources" from sidebar
@@ -231,16 +314,25 @@ User → Login
 - Related items grouped together
 - Clear section titles
 - Intuitive organization
+- Master Data separated from operational views
 
 ### 3. Scalable
 - Easy to add new lines
 - Easy to add new views
 - Easy to add new management tools
+- Master Data system supports unlimited machines and spareparts
 
 ### 4. User-Friendly
 - Less scrolling to find items
 - Visual separation of concerns
 - Quick access to frequently used items
+- Master Data accessible from sidebar for quick management
+
+### 5. Manufacturing-Focused
+- Master Data foundation for all operations
+- Engine-to-sparepart relationship tracking
+- Line configuration based on master data
+- Complete manufacturing workflow support
 
 ---
 

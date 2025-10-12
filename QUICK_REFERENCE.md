@@ -32,19 +32,30 @@ src/
 ├── components/
 │   ├── custom/app/      → Widget, Card, Datatable
 │   ├── custom/layout/   → Sidebar, Header, Nav
+│   ├── master-data/     → Master Data modals (NEW)
 │   └── ui/              → Radix UI components
 ├── contexts/            → State management
+│   ├── auth.jsx         → Authentication context (NEW)
 │   ├── interact.jsx     → Layout & Dashboard state
 │   ├── source.jsx       → Data sources
 │   ├── sheet.jsx        → Configuration panel
 │   └── thems.jsx        → Dark/Light mode
 ├── pages/
-│   ├── dashbaord/home   → Main dashboard view
+│   ├── auth/            → Login page (NEW)
+│   ├── welcome/         → Welcome page (NEW)
+│   ├── lines/           → Line selection (NEW)
+│   ├── dashbaord/       → Dashboard views
+│   │   ├── home.jsx     → Main dashboard view
+│   │   ├── LineDashboard.jsx  → Line-specific dashboard (NEW)
+│   │   └── DashboardView.jsx  → Generic dashboard view (NEW)
+│   ├── master-data/     → Master Data pages (NEW)
+│   │   ├── MasterDataMachines.jsx
+│   │   └── MasterDataSpareparts.jsx
 │   └── data-resources/  → Data management
 ├── layouts/
 │   ├── container.jsx    → Grid layout wrapper
 │   └── dashbaord.jsx    → Dashboard layout
-└── utils/               → Helper functions
+└── utils/               → Helper functions & constants
 ```
 
 ---
@@ -138,7 +149,76 @@ window.dispatchEvent(new Event('dataSourcesUpdated'));
 
 ---
 
-### 4. Debug Data Issues
+### 4. Add Master Data (NEW)
+
+**Step 1**: Create Master Data - Machines Page
+```javascript
+// src/pages/master-data/MasterDataMachines.jsx
+const MasterDataMachines = () => {
+  const [machines, setMachines] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  
+  return (
+    <div className="master-data-page">
+      <div className="page-header">
+        <h1>MASTER DATA - MACHINES</h1>
+        <Button onClick={() => setShowModal(true)}>Add</Button>
+      </div>
+      <table>{/* Machine table */}</table>
+    </div>
+  );
+};
+```
+
+**Step 2**: Add route in `app.jsx`
+```javascript
+<Route path="/master-data/machines" element={
+  <Protected><MasterDataMachines /></Protected>
+} />
+<Route path="/master-data/spareparts" element={
+  <Protected><MasterDataSpareparts /></Protected>
+} />
+```
+
+**Step 3**: Add to sidebar in `sidebar-data.js`
+```javascript
+{
+  group: 'Master Data',
+  items: [
+    {
+      title: 'Machines',
+      url: '/master-data/machines',
+      icon: Cog,
+    },
+    {
+      title: 'Spareparts',
+      url: '/master-data/spareparts',
+      icon: Wrench,
+    }
+  ]
+}
+```
+
+**Step 4**: Store master data in localStorage
+```javascript
+// Save machine
+const machine = {
+  id: Date.now(),
+  machine_id: '125436',
+  name: 'Nut Runner',
+  asset_no: '1234567890',
+  acquisition_year: 2023,
+  status: 'active'
+};
+
+const machines = local.get('master_machines') || [];
+machines.push(machine);
+local.save('master_machines', machines);
+```
+
+---
+
+### 5. Debug Data Issues
 
 ```javascript
 // Check localStorage in browser console
