@@ -422,8 +422,115 @@ export const default_dash = [
   },
   {
     "id_dash": 3,
-    "component": [],
-    "layout": []
+    "component": [
+      {
+        "label": "Widget",
+        "i": "line3_oee",
+        "props": {
+          "title": "OEE Monitoring",
+          "chart_type": "gauge",
+          "id_resource_data": 1755265050554,
+          "x_data": [],
+          "yData": [],
+          "value_kpi": "total_oee",
+          "max_rate": "100"
+        }
+      },
+      {
+        "label": "Card",
+        "i": "line3_target",
+        "props": {
+          "title": "Production Target",
+          "chart_type": "gauge",
+          "id_resource_data": 1755265864644,
+          "x_data": [],
+          "yData": [],
+          "value_kpi": "value",
+          "max_rate": "100",
+          "card_type": "kpi",
+          "subtitle_kpi": "subtitle",
+          "percentage_kpi": "percentage",
+          "data_1": "",
+          "title_1": "",
+          "data_2": "",
+          "title_2": ""
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "line3_prod",
+        "props": {
+          "title": "Production vs Reject",
+          "chart_type": "bar",
+          "id_resource_data": 1755265080795,
+          "x_data": "tanggal",
+          "yData": [
+            {
+              "label": "produksi",
+              "value": "produksi"
+            },
+            {
+              "label": "reject",
+              "value": "reject"
+            }
+          ],
+          "value_kpi": "",
+          "max_rate": ""
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "line3_cycle",
+        "props": {
+          "title": "Cycle Time Trend",
+          "chart_type": "area",
+          "id_resource_data": 1755265039617,
+          "x_data": "hour",
+          "yData": [
+            {
+              "label": "cycle_time",
+              "value": "cycle_time"
+            }
+          ],
+          "value_kpi": "",
+          "max_rate": ""
+        }
+      }
+    ],
+    "layout": [
+      {
+        "w": 12,
+        "h": 20,
+        "x": 0,
+        "y": 0,
+        "i": "line3_oee",
+        "static": false
+      },
+      {
+        "w": 12,
+        "h": 10,
+        "x": 12,
+        "y": 0,
+        "i": "line3_target",
+        "static": false
+      },
+      {
+        "w": 12,
+        "h": 15,
+        "x": 12,
+        "y": 10,
+        "i": "line3_prod",
+        "static": false
+      },
+      {
+        "w": 24,
+        "h": 20,
+        "x": 24,
+        "y": 0,
+        "i": "line3_cycle",
+        "static": false
+      }
+    ]
   },
   {
     "id_dash": 4,
@@ -642,6 +749,46 @@ export const default_dash = [
         "static": false
       }
     ]
+  },
+  {
+    "id_dash": 4,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 5,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 6,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 7,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 8,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 9,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 10,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 11,
+    "component": [],
+    "layout": []
   }
 ]
 

@@ -6,16 +6,23 @@ import {
 } from '@/components/ui/sidebar'
 import { Nav } from '@/components/custom/layout/nav'
 import { Brand } from '@/components/custom/layout/user'
-import { sidebarData } from '../../data/sidebar-data'
+import { getSidebarData } from '../../data/sidebar-data'
+import { useAuth } from '@/contexts/auth'
 import { useTheme } from '@/contexts/thems'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Moon, Sun } from 'lucide-react'
+import { useMemo } from 'react'
 
 
 
 export const AppSidebar = ({ ...props }) => {
   const { setTheme } = useTheme()
+  const { getCurrentLine } = useAuth()
+
+  // Get dynamic sidebar data based on current line
+  const currentLine = getCurrentLine();
+  const sidebarData = useMemo(() => getSidebarData(currentLine), [currentLine]);
 
   return (
     <Sidebar collapsible='icon' variant='floating' {...props}>

@@ -6,7 +6,7 @@ import { ArrowRight, SearchCheck } from 'lucide-react';
 import { useContext, useEffect, useState } from "react";
 
 export function AppCommand() {
-    const { updateComponent, components } = useContext(LayoutContext)
+    const { updateComponent, components, layout, updateLayout } = useContext(LayoutContext)
     const [state, setState] = useState([])
     const [open, setOpen] = useState(false)
 
@@ -15,12 +15,29 @@ export function AppCommand() {
     }
 
     const updateState = ({ label, element, props }) => {
+        const newId = utils.generateName(6).toString();
+
+        // Calculate next available position
+        const maxY = layout.length > 0 ? Math.max(...layout.map(l => l.y + l.h)) : 0;
+
+        // Add component
         updateComponent([...components, {
             label,
             component: element,
-            i: utils.generateName(6).toString(),
+            i: newId,
             props
-        }])
+        }]);
+
+        // Add layout with proper default position
+        updateLayout([...layout, {
+            i: newId,
+            x: 0,
+            y: maxY, // Stack below existing widgets
+            w: 12,   // Default width (1/4 of screen)
+            h: 15,   // Default height
+            static: false
+        }]);
+
         setOpen((open) => !open)
     }
 

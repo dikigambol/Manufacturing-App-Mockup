@@ -79,3 +79,141 @@
   fill: var(--foreground) !important;
   text-shadow: unset !important;
 }
+
+/* Enhanced Dashboard Styling */
+.dashboard-grid {
+  background: transparent;
+}
+
+.dashboard-grid .react-grid-item {
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  border: 1px solid rgb(226 232 240);
+  background: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.dashboard-grid .react-grid-item:hover {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border-color: rgb(59 130 246);
+}
+
+.dashboard-grid .react-grid-item.react-grid-placeholder {
+  background: rgb(59 130 246 / 0.1);
+  border: 2px dashed rgb(59 130 246);
+  border-radius: 12px;
+}
+
+.dashboard-grid .react-grid-item.react-draggable-dragging {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  transform: rotate(2deg);
+}
+
+/* Dark mode support */
+.dark .dashboard-grid .react-grid-item {
+  background: rgb(30 41 59);
+  border-color: rgb(51 65 85);
+}
+
+.dark .dashboard-grid .react-grid-item:hover {
+  border-color: rgb(59 130 246);
+}
+
+/* Loading animations */
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(241 245 249);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(148 163 184);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgb(30 41 59);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgb(71 85 105);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139);
+}
+
+/* Drag Handle Styling */
+.drag-handle {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  cursor: move !important;
+}
+
+.drag-handle:hover {
+  background: rgb(248 250 252) !important;
+}
+
+.dark .drag-handle:hover {
+  background: rgb(30 41 59) !important;
+}
+
+.drag-handle:active {
+  cursor: grabbing !important;
+}
+
+/* Grid Item Improvements */
+.react-grid-item.react-draggable-dragging {
+  opacity: 0.9;
+  z-index: 100 !important;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: rgb(59 130 246 / 0.2) !important;
+  border: 2px dashed rgb(59 130 246) !important;
+  border-radius: 12px;
+  transition: all 200ms ease;
+}
+
+/* Better resize handle visibility */
+.react-grid-item>.react-resizable-handle::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-right: 2px solid rgb(59 130 246);
+  border-bottom: 2px solid rgb(59 130 246);
+}
