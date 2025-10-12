@@ -1623,6 +1623,21 @@ Week 7-8: Machine Detail Dashboard + Advanced Features
 ### **🎯 Master Data Overview:**
 Berdasarkan preview yang Anda attach, sistem memerlukan **Master Data Management** sebagai foundation sebelum bisa membuat line configuration dan dashboard widgets.
 
+### **📸 Master Data UI Preview:**
+
+#### **Master Data - Machines (Engines)**
+![Master Data Machines Page 1](reference/Dashboard%20Assy%20Engine%20(Full)_page-0010.jpg)
+![Master Data Machines Page 2](reference/Dashboard%20Assy%20Engine%20(Full)_page-0011.jpg)
+![Master Data Machines Page 3](reference/Dashboard%20Assy%20Engine%20(Full)_page-0012.jpg)
+**Preview**: Complete machine database with ID, Name, Asset No, Acquisition Year, and Actions (Edit/Delete)
+
+#### **Master Data - Spareparts**
+![Master Data Spareparts Page 1](reference/Dashboard%20Assy%20Engine%20(Full)_page-0013.jpg)
+![Master Data Spareparts Page 2](reference/Dashboard%20Assy%20Engine%20(Full)_page-0014.jpg)
+![Master Data Spareparts Page 3](reference/Dashboard%20Assy%20Engine%20(Full)_page-0015.jpg)
+![Master Data Spareparts Page 4](reference/Dashboard%20Assy%20Engine%20(Full)_page-0016.jpg)
+**Preview**: Complete spareparts inventory with Part Number, Part Name, Specification, Brand, Type, Picture, Stock, and Actions
+
 #### **📊 Master Data Components Required:**
 
 **1. Master Data - Machines (Engines)**
