@@ -9,6 +9,13 @@ import LineSelectionPage from "@/pages/lines/LineSelectionPage";
 import LineDashboard from "@/pages/dashboard/LineDashboard";
 import DashboardView from "@/pages/dashboard/DashboardView";
 import Protected from "@/utils/protected";
+import MasterDataAccessLevel from "@/pages/master-data/MasterDataAccessLevel";
+import MasterDataMachines from "@/pages/master-data/MasterDataMachines";
+import MasterDataUsers from "@/pages/master-data/MasterDataUsers";
+import MasterDataSpareparts from "@/pages/master-data/MasterDataSpareparts";
+import AndonList from "@/pages/andon/AndonList";
+import MaintenanceList from "@/pages/maintenance/MaintenanceList";
+import TraceabilityList from "@/pages/traceability/TraceabilityList";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router";
 import { SheetProvider } from "./contexts/sheet";
 import { SourceProvider } from "./contexts/source";
@@ -70,6 +77,17 @@ function App() {
                         {/* Management pages */}
                         <Route path="/data-resources" element={<DataSource />} />
                         <Route path="/settings" element={<DashboardView />} />
+
+                        {/* Master Data Routes */}
+                        <Route path="/master-data/access-level" element={<MasterDataAccessLevel />} />
+                        <Route path="/master-data/users" element={<MasterDataUsers />} />
+                        <Route path="/master-data/machines" element={<MasterDataMachines />} />
+                        <Route path="/master-data/spareparts" element={<MasterDataSpareparts />} />
+
+                        {/* System Routes */}
+                        <Route path="/andon/list" element={<AndonList />} />
+                        <Route path="/maintenance/list" element={<MaintenanceList />} />
+                        <Route path="/traceability/list" element={<TraceabilityList />} />
                       </Route>
                     </Route>
 

@@ -15,6 +15,9 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useAuth } from "@/contexts/auth";
+import DummyDataService from "@/services/DummyDataService";
+import { AlertContext } from "@/contexts/alert";
+import { useContext } from "react";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -25,6 +28,14 @@ const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { login } = useAuth();
+    const alertContext = useContext(AlertContext);
+
+    // Helper function untuk show alert
+    const showAlert = (status, message) => {
+        if (alertContext && alertContext.alert) {
+            alertContext.alert({ status, message, time: 3 });
+        }
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -38,36 +49,65 @@ const LoginPage = () => {
         e.preventDefault();
         setIsLoading(true);
 
-        // Simulate login process
-        setTimeout(() => {
+        try {
+            // Authenticate with DummyDataService using NRP and password
+            const user = await DummyDataService.users.authenticate(
+                formData.username, // NRP
+                formData.password
+            );
+
             // Store user session using auth context
             const userData = {
-                username: formData.username,
-                role: "production_manager",
+                id: user.id,
+                username: user.name,
+                nrp: user.nrp,
+                role: user.access_level_name,
+                access_level_id: user.access_level_id,
+                picture_url: user.picture_url,
                 loginTime: new Date().toISOString()
             };
 
             login(userData);
-            setIsLoading(false);
+            showAlert('success', `Welcome back, ${user.name}!`);
             navigate("/lines");
-        }, 1500);
+        } catch (error) {
+            showAlert('error', error.message || 'Invalid credentials');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    const quickLogin = (role) => {
+    const quickLogin = async (role) => {
         setIsLoading(true);
 
-        // Simulate login process
-        setTimeout(() => {
+        try {
+            let user;
+            if (role === "admin") {
+                // Login as John Doe (Admin)
+                user = await DummyDataService.users.authenticate("297498", "admin123");
+            } else {
+                // Login as Asep Gunandar (Operator)
+                user = await DummyDataService.users.authenticate("297499", "operator123");
+            }
+
             const userData = {
-                username: role === "admin" ? "admin" : "operator",
-                role: role === "admin" ? "administrator" : "production_operator",
+                id: user.id,
+                username: user.name,
+                nrp: user.nrp,
+                role: user.access_level_name,
+                access_level_id: user.access_level_id,
+                picture_url: user.picture_url,
                 loginTime: new Date().toISOString()
             };
 
             login(userData);
-            setIsLoading(false);
+            showAlert('success', `Welcome back, ${user.name}!`);
             navigate("/lines");
-        }, 800);
+        } catch (error) {
+            showAlert('error', error.message || 'Login failed');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -160,10 +200,10 @@ const LoginPage = () => {
 
                         {/* Quick Login Options */}
                         <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-                            <p className="text-sm text-slate-600 dark:text-slate-400 text-center mb-4">
+                            <p className="text-sm text-slate-600 dark:text-slate-400 text-center mb-3">
                                 Quick Login (Demo)
                             </p>
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-2 gap-3 mb-4">
                                 <Button
                                     variant="outline"
                                     size="sm"
@@ -192,6 +232,17 @@ const LoginPage = () => {
                                     )}
                                     Operator
                                 </Button>
+                            </div>
+
+                            {/* Login Credentials Info */}
+                            <div className="bg-slate-100 dark:bg-slate-700/50 rounded-lg p-3 text-xs space-y-1">
+                                <p className="font-semibold text-slate-700 dark:text-slate-300 mb-2">Test Credentials:</p>
+                                <div className="space-y-1 text-slate-600 dark:text-slate-400">
+                                    <p>• <span className="font-medium">Admin:</span> NRP: 297498 | Pass: admin123</p>
+                                    <p>• <span className="font-medium">Operator:</span> NRP: 297499 | Pass: operator123</p>
+                                    <p>• <span className="font-medium">Technician:</span> NRP: 297500 | Pass: tech123</p>
+                                    <p>• <span className="font-medium">Supervisor:</span> NRP: 297501 | Pass: super123</p>
+                                </div>
                             </div>
                         </div>
                     </CardContent>

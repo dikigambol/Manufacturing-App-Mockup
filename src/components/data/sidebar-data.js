@@ -27,7 +27,14 @@ import {
   Zap,
   Users as UsersIcon,
   TrendingUp,
-  Package
+  Package,
+  FolderKey,
+  User,
+  Cog,
+  PackageSearch,
+  Bell,
+  ClipboardList,
+  History
 } from 'lucide-react'
 
 // Get sidebar data based on active line
@@ -110,6 +117,51 @@ export const getSidebarData = (lineId) => {
         ]
       },
       {
+        title: 'Master Data',
+        items: [
+          {
+            title: 'Access Level',
+            url: '/master-data/access-level',
+            icon: FolderKey,
+          },
+          {
+            title: 'Users',
+            url: '/master-data/users',
+            icon: User,
+          },
+          {
+            title: 'Machines',
+            url: '/master-data/machines',
+            icon: Cog,
+          },
+          {
+            title: 'Spareparts',
+            url: '/master-data/spareparts',
+            icon: PackageSearch,
+          },
+        ]
+      },
+      {
+        title: 'System',
+        items: [
+          {
+            title: 'Andon System',
+            url: '/andon/list',
+            icon: Bell,
+          },
+          {
+            title: 'Maintenance',
+            url: '/maintenance/list',
+            icon: ClipboardList,
+          },
+          {
+            title: 'Traceability',
+            url: '/traceability/list',
+            icon: History,
+          },
+        ]
+      },
+      {
         title: 'Management',
         items: [
           {
@@ -182,6 +234,51 @@ export const getSidebarData = (lineId) => {
             id_dash: 11,
             icon: UsersIcon,
           }
+        ]
+      },
+      {
+        title: 'Master Data',
+        items: [
+          {
+            title: 'Access Level',
+            url: '/master-data/access-level',
+            icon: FolderKey,
+          },
+          {
+            title: 'Users',
+            url: '/master-data/users',
+            icon: User,
+          },
+          {
+            title: 'Machines',
+            url: '/master-data/machines',
+            icon: Cog,
+          },
+          {
+            title: 'Spareparts',
+            url: '/master-data/spareparts',
+            icon: PackageSearch,
+          },
+        ]
+      },
+      {
+        title: 'System',
+        items: [
+          {
+            title: 'Andon System',
+            url: '/andon/list',
+            icon: Bell,
+          },
+          {
+            title: 'Maintenance',
+            url: '/maintenance/list',
+            icon: ClipboardList,
+          },
+          {
+            title: 'Traceability',
+            url: '/traceability/list',
+            icon: History,
+          },
         ]
       },
       {
@@ -260,6 +357,51 @@ export const getSidebarData = (lineId) => {
         ]
       },
       {
+        title: 'Master Data',
+        items: [
+          {
+            title: 'Access Level',
+            url: '/master-data/access-level',
+            icon: FolderKey,
+          },
+          {
+            title: 'Users',
+            url: '/master-data/users',
+            icon: User,
+          },
+          {
+            title: 'Machines',
+            url: '/master-data/machines',
+            icon: Cog,
+          },
+          {
+            title: 'Spareparts',
+            url: '/master-data/spareparts',
+            icon: PackageSearch,
+          },
+        ]
+      },
+      {
+        title: 'System',
+        items: [
+          {
+            title: 'Andon System',
+            url: '/andon/list',
+            icon: Bell,
+          },
+          {
+            title: 'Maintenance',
+            url: '/maintenance/list',
+            icon: ClipboardList,
+          },
+          {
+            title: 'Traceability',
+            url: '/traceability/list',
+            icon: History,
+          },
+        ]
+      },
+      {
         title: 'Management',
         items: [
           {
@@ -287,6 +429,51 @@ export const getSidebarData = (lineId) => {
           url: '/dashboard/overview',
           id_dash: 4,
           icon: BarChart3,
+        },
+      ]
+    },
+    {
+      title: 'Master Data',
+      items: [
+        {
+          title: 'Access Level',
+          url: '/master-data/access-level',
+          icon: FolderKey,
+        },
+        {
+          title: 'Users',
+          url: '/master-data/users',
+          icon: User,
+        },
+        {
+          title: 'Machines',
+          url: '/master-data/machines',
+          icon: Cog,
+        },
+        {
+          title: 'Spareparts',
+          url: '/master-data/spareparts',
+          icon: PackageSearch,
+        },
+      ]
+    },
+    {
+      title: 'System',
+      items: [
+        {
+          title: 'Andon System',
+          url: '/andon/list',
+          icon: Bell,
+        },
+        {
+          title: 'Maintenance',
+          url: '/maintenance/list',
+          icon: ClipboardList,
+        },
+        {
+          title: 'Traceability',
+          url: '/traceability/list',
+          icon: History,
         },
       ]
     },
