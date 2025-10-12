@@ -16,73 +16,119 @@
 
 ## Overview Aplikasi
 
-**Manufacturing App Mockup** adalah aplikasi dashboard monitoring untuk manajemen mesin industri yang dibangun dengan React dan Vite. Aplikasi ini memungkinkan pengguna untuk:
+**Manufacturing App Mockup** adalah aplikasi dashboard monitoring komprehensif untuk manajemen mesin industri yang dibangun dengan React dan Vite. Aplikasi ini mengimplementasikan sistem manufaktur lengkap dengan:
 
-- 📊 Visualisasi data real-time dengan berbagai chart types
-- 🎨 Customizable dashboard dengan drag-and-drop layout
-- 📁 Manajemen data source dari file JSON
-- 🔄 Dynamic widget configuration
-- 📱 Responsive design dengan Tailwind CSS
+### 🏭 **Manufacturing System Features**
+- **Multi-Line Production**: 3 production lines dengan dashboard independen
+- **Master Data Management**: Access Level, Users, Machines, Spareparts
+- **Andon System**: Real-time issue reporting dan response tracking
+- **Maintenance System**: Comprehensive ticket management dan scheduling
+- **Traceability System**: Complete machine history dan root cause analysis
+- **Line Configuration**: Dynamic line setup dengan machine layout management
 
-### Fitur Utama
-- **Multi-Dashboard Support**: 9 dashboard berbeda untuk berbagai keperluan monitoring
-- **Dynamic Widgets**: Support untuk Bar Chart, Pie Chart, Area Chart, Gauge Chart, KPI Cards, dan Datatables
-- **Drag & Drop Layout**: Menggunakan `react-grid-layout` untuk customizable layout
-- **Data Source Management**: Upload dan manage data JSON melalui UI
+### 🎯 **User Roles & Access**
+- **Administrator**: Full access ke semua sistem dan master data
+- **Operator**: Dashboard access, Andon reporting, Traceability viewing
+- **Technician**: Dashboard access, Andon response, Maintenance management, Traceability
+
+### 📊 **Dashboard & Visualization**
+- **Line-Specific Dashboards**: Customizable dashboard per production line
+- **Machine Detail Views**: Individual machine monitoring dan configuration
+- **Real-time Data**: Live machine status dan production metrics
+- **Interactive Widgets**: Drag-and-drop layout dengan 15+ widget types
+- **OEE Monitoring**: Overall Equipment Effectiveness tracking
+
+### 🔧 **Technical Features**
+- **UI First Development**: Build dengan dummy data, migrate ke database
+- **Internal Hub Database**: Offline/manufacturing network database
+- **Machine Integration**: API interface untuk external machine databases
+- **Responsive Design**: Mobile-friendly dengan Tailwind CSS
 - **Theme Support**: Dark/Light mode dengan context API
-- **LocalStorage Persistence**: State tersimpan di browser
 
 ---
 
 ## Arsitektur Aplikasi
 
+### 🏗️ **Complete Manufacturing System Architecture**
+
 ```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        MANUFACTURING ENVIRONMENT                         │
+│  ┌─────────────────────┐    ┌─────────────────────┐                    │
+│  │   Machine Database  │    │   Machine Database  │                    │
+│  │   (External/API)    │    │   (External/API)    │                    │
+│  │   - Line 1 Machines │    │   - Line 2 Machines │                    │
+│  │   - Real-time Data  │    │   - Real-time Data  │                    │
+│  └─────────────────────┘    └─────────────────────┘                    │
+│           │                           │                                 │
+│           └──────────────┬────────────┘                                 │
+│                          │ API Interface                                │
+└──────────────────────────┼─────────────────────────────────────────────┘
+                           │
+┌──────────────────────────┼─────────────────────────────────────────────┐
+│                    INTERNAL HUB DATABASE                                │
+│  ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────┐│
+│  │   Master Data       │  │   System Data       │  │  Dashboard Data ││
+│  │   - Access Levels   │  │   - Andon Tickets   │  │   - Line Config ││
+│  │   - Users           │  │   - Maintenance     │  │   - Widgets     ││
+│  │   - Machines        │  │   - Traceability    │  │   - Layouts     ││
+│  │   - Spareparts      │  │   - Machine Status  │  │   - Settings    ││
+│  └─────────────────────┘  └─────────────────────┘  └─────────────────┘│
+└──────────────────────────┼─────────────────────────────────────────────┘
+                           │
+┌──────────────────────────┼─────────────────────────────────────────────┐
+│                      REACT APPLICATION LAYER                           │
+│  ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────┐│
+│  │   Authentication    │  │   Context Providers │  │   Router &      ││
+│  │   - Login/Logout    │  │   - AuthProvider    │  │   Navigation    ││
+│  │   - Line Selection  │  │   - LayoutProvider  │  │   - Protected   ││
+│  │   - Access Control  │  │   - SourceProvider  │  │   - Routes      ││
+│  └─────────────────────┘  └─────────────────────┘  └─────────────────┘│
+└──────────────────────────┼─────────────────────────────────────────────┘
+                           │
+┌──────────────────────────┼─────────────────────────────────────────────┐
+│                        UI COMPONENTS LAYER                              │
+│  ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────┐│
+│  │   Master Data UI    │  │   System UI         │  │   Dashboard UI  ││
+│  │   - Access Level    │  │   - Andon List      │  │   - Line Views  ││
+│  │   - User Management │  │   - Maintenance     │  │   - Machine     ││
+│  │   - Machine Config  │  │   - Traceability    │  │   - Widgets     ││
+│  │   - Sparepart Mgmt  │  │   - Reports         │  │   - Charts      ││
+│  └─────────────────────┘  └─────────────────────┘  └─────────────────┘│
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### 🔄 **Development Phases Architecture**
+
+```
+Phase 1A: UI First dengan Dummy Data (Week 1-2)
+    ↓
 ┌─────────────────────────────────────────────────────────┐
-│                     Browser Layer                        │
-│  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐ │
-│  │ React Router│  │  React State │  │  LocalStorage  │ │
-│  └─────────────┘  └──────────────┘  └────────────────┘ │
+│  UI Components + Dummy Data Service                     │
+│  - Master Data Pages dengan Mock Data                   │
+│  - System Workflows (Andon, Maintenance, Traceability)  │
+│  - Dashboard dengan Sample Data                         │
+│  - Simple Routing dengan Props                          │
 └─────────────────────────────────────────────────────────┘
-                            │
+    ↓
+Phase 1B: Database Integration (Week 3-4)
+    ↓
 ┌─────────────────────────────────────────────────────────┐
-│                   Context Providers                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │ThemeProvider │  │SourceProvider│  │SheetProvider │  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
-│  ┌──────────────┐  ┌──────────────┐                    │
-│  │LayoutProvider│  │AlertProvider │                    │
-│  └──────────────┘  └──────────────┘                    │
+│  Internal Hub Database + Real Data Service              │
+│  - PostgreSQL/MySQL Database Setup                      │
+│  - CRUD Operations Implementation                       │
+│  - Data Persistence & Validation                        │
+│  - Replace Dummy Data Service                           │
 └─────────────────────────────────────────────────────────┘
-                            │
+    ↓
+Phase 1C: Machine Integration (Week 5-6)
+    ↓
 ┌─────────────────────────────────────────────────────────┐
-│                    Layout & Pages                        │
-│  ┌─────────────────────────────────────────────────┐   │
-│  │          Dashboard Layout (Sidebar)              │   │
-│  │  ┌────────────┐  ┌─────────────────────────┐   │   │
-│  │  │  Sidebar   │  │   Page Content          │   │   │
-│  │  │  - Nav     │  │   - Home (Container)    │   │   │
-│  │  │  - Menu    │  │   - Data Resources      │   │   │
-│  │  └────────────┘  └─────────────────────────┘   │   │
-│  └─────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────┘
-                            │
-┌─────────────────────────────────────────────────────────┐
-│                 Container & Widgets                      │
-│  ┌────────────────────────────────────────────────┐    │
-│  │    React Grid Layout (Responsive)              │    │
-│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐    │    │
-│  │  │  Widget  │  │   Card   │  │Datatable │    │    │
-│  │  │ (Charts) │  │  (KPI)   │  │ (Table)  │    │    │
-│  │  └──────────┘  └──────────┘  └──────────┘    │    │
-│  └────────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────────┘
-                            │
-┌─────────────────────────────────────────────────────────┐
-│                  Chart Components                        │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────┐│
-│  │BarChart  │  │PieChart  │  │AreaChart │  │  Gauge  ││
-│  │(Recharts)│  │(Recharts)│  │(Recharts)│  │ (Gauge) ││
-│  └──────────┘  └──────────┘  └──────────┘  └─────────┘│
+│  Machine Data Sync + Real-time Integration              │
+│  - API Interface untuk Machine Databases                │
+│  - Real-time Data Synchronization                       │
+│  - Offline Data Management                              │
+│  - Production Environment Setup                         │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -132,214 +178,409 @@
 
 ## Struktur Project
 
+### 📁 **Complete Manufacturing System Structure**
+
 ```
 /Users/kly/developments/moritzdesk/gus Idham/
 │
 ├── public/
-│   └── favicon.png
+│   ├── favicon.png
+│   └── images/                          # Manufacturing images
+│       ├── users/                       # User profile pictures
+│       ├── machines/                    # Machine images
+│       └── spareparts/                  # Sparepart images
 │
 ├── src/
-│   ├── main.jsx                 # Entry point
-│   ├── app.jsx                  # Root component dengan routing
+│   ├── main.jsx                         # Entry point
+│   ├── app.jsx                          # Root component dengan routing
 │   │
 │   ├── assets/
 │   │   └── css/
-│   │       ├── custom.css       # Custom styles
-│   │       └── main.css         # Main CSS (Tailwind)
+│   │       ├── custom.css               # Custom styles
+│   │       └── main.css                 # Main CSS (Tailwind)
 │   │
 │   ├── components/
 │   │   ├── custom/
 │   │   │   ├── app/
 │   │   │   │   ├── alert.jsx
-│   │   │   │   ├── AppCard.jsx           # KPI & Stat Cards
-│   │   │   │   ├── AppSheet.jsx          # Side sheet component
-│   │   │   │   ├── Datatable.jsx         # Data table widget
-│   │   │   │   ├── multipel.jsx          # Multiple select
-│   │   │   │   ├── Widget.jsx            # Chart widget wrapper
+│   │   │   │   ├── AppCard.jsx          # KPI & Stat Cards
+│   │   │   │   ├── AppSheet.jsx         # Side sheet component
+│   │   │   │   ├── Datatable.jsx        # Data table widget
+│   │   │   │   ├── Widget.jsx           # Chart widget wrapper
 │   │   │   │   ├── cards/
 │   │   │   │   │   ├── KPICard.jsx
 │   │   │   │   │   └── StatCard.jsx
-│   │   │   │   └── charts/
-│   │   │   │       ├── AppChartArea.jsx
-│   │   │   │       ├── AppChartBar.jsx
-│   │   │   │       ├── AppChartGauge.jsx
-│   │   │   │       └── AppChartPie.jsx
-│   │   │   └── layout/
-│   │   │       ├── command.jsx           # Command palette
-│   │   │       ├── header.jsx            # App header
-│   │   │       ├── nav.jsx               # Navigation
-│   │   │       ├── sidebar.jsx           # Sidebar component
-│   │   │       └── user.jsx              # User menu
+│   │   │   │   ├── charts/
+│   │   │   │   │   ├── AppChartArea.jsx
+│   │   │   │   │   ├── AppChartBar.jsx
+│   │   │   │   │   ├── AppChartGauge.jsx
+│   │   │   │   │   └── AppChartPie.jsx
+│   │   │   │   └── manufacturing/       # NEW: Manufacturing widgets
+│   │   │   │       ├── OEEDonutChart.jsx
+│   │   │   │       ├── MachineLayout.jsx
+│   │   │   │       ├── CalendarWidget.jsx
+│   │   │   │       ├── CallSummaryCard.jsx
+│   │   │   │       ├── MachineInfoCard.jsx
+│   │   │   │       ├── ParameterConfig.jsx
+│   │   │   │       └── GanttChart.jsx
+│   │   │   ├── layout/
+│   │   │   │   ├── command.jsx          # Command palette
+│   │   │   │   ├── header.jsx           # App header
+│   │   │   │   ├── nav.jsx              # Navigation
+│   │   │   │   ├── sidebar.jsx          # Sidebar component
+│   │   │   │   └── user.jsx             # User menu
+│   │   │   └── master-data/             # NEW: Master Data components
+│   │   │       ├── AccessLevelModal.jsx
+│   │   │       ├── UserModal.jsx
+│   │   │       ├── MachineModal.jsx
+│   │   │       └── SparepartModal.jsx
 │   │   │
 │   │   ├── data/
-│   │   │   └── sidebar-data.js           # Sidebar menu data
+│   │   │   ├── sidebar-data.js          # Sidebar menu data
+│   │   │   └── dummyData.js             # NEW: Dummy data for UI development
 │   │   │
-│   │   └── ui/                           # Radix UI components
+│   │   └── ui/                          # Radix UI components
 │   │       ├── alert.jsx
 │   │       ├── button.jsx
 │   │       ├── card.jsx
 │   │       ├── chart.jsx
 │   │       └── ... (30+ UI components)
 │   │
-│   ├── contexts/                         # React Context providers
-│   │   ├── alert.jsx                     # Alert notifications
-│   │   ├── interact.jsx                  # Layout state management
-│   │   ├── sheet.jsx                     # Sheet state
-│   │   ├── source.jsx                    # Data source management
-│   │   └── thems.jsx                     # Theme management
+│   ├── contexts/                        # React Context providers
+│   │   ├── alert.jsx                    # Alert notifications
+│   │   ├── auth.jsx                     # NEW: Authentication context
+│   │   ├── interact.jsx                 # Layout state management
+│   │   ├── sheet.jsx                    # Sheet state
+│   │   ├── source.jsx                   # Data source management
+│   │   └── thems.jsx                    # Theme management
+│   │
+│   ├── data/                            # NEW: Data management
+│   │   └── dummyData.js                 # Dummy data for all systems
 │   │
 │   ├── hooks/
-│   │   └── use-mobile.js                 # Mobile detection hook
+│   │   └── use-mobile.js                # Mobile detection hook
 │   │
 │   ├── layouts/
-│   │   ├── container.jsx                 # Grid layout container
-│   │   └── dashbaord.jsx                 # Dashboard layout wrapper
+│   │   ├── container.jsx                # Grid layout container
+│   │   └── dashbaord.jsx                # Dashboard layout wrapper
 │   │
 │   ├── lib/
-│   │   └── utils.js                      # Utility functions
+│   │   └── utils.js                     # Utility functions
 │   │
 │   ├── pages/
-│   │   ├── dashbaord/
-│   │   │   └── home.jsx                  # Dashboard home page
+│   │   ├── auth/                        # NEW: Authentication pages
+│   │   │   └── LoginPage.jsx
+│   │   ├── welcome/                     # NEW: Landing page
+│   │   │   └── WelcomePage.jsx
+│   │   ├── lines/                       # NEW: Line selection
+│   │   │   └── LineSelectionPage.jsx
+│   │   ├── dashboard/                   # Dashboard pages
+│   │   │   ├── home.jsx                 # Dashboard home page
+│   │   │   ├── LineDashboard.jsx        # NEW: Line-specific dashboard
+│   │   │   ├── DashboardView.jsx        # NEW: Generic dashboard view
+│   │   │   └── MachineDetailDashboard.jsx # NEW: Machine detail view
+│   │   ├── master-data/                 # NEW: Master Data pages
+│   │   │   ├── MasterDataAccessLevel.jsx
+│   │   │   ├── MasterDataUsers.jsx
+│   │   │   ├── MasterDataMachines.jsx
+│   │   │   └── MasterDataSpareparts.jsx
+│   │   ├── andon/                       # NEW: Andon System
+│   │   │   ├── AndonList.jsx
+│   │   │   ├── CreateTicketModal.jsx
+│   │   │   └── ResponseTicketModal.jsx
+│   │   ├── maintenance/                 # NEW: Maintenance System
+│   │   │   ├── MaintenanceList.jsx
+│   │   │   ├── CreateTicketModal.jsx
+│   │   │   ├── ResponseTicketModal.jsx
+│   │   │   └── MaintenanceCalendarWidget.jsx
+│   │   ├── traceability/                # NEW: Traceability System
+│   │   │   ├── TraceabilityList.jsx
+│   │   │   └── MachineDetailWidget.jsx
 │   │   ├── data-resources/
-│   │   │   └── index.jsx                 # Data source management page
-│   │   └── errors/                       # Error pages
+│   │   │   └── index.jsx                # Data source management page
+│   │   └── errors/                      # Error pages
 │   │       ├── 401.jsx
 │   │       ├── 402.jsx
 │   │       ├── 403.jsx
 │   │       └── 404.jsx
 │   │
+│   ├── services/                        # NEW: Data services
+│   │   ├── DummyDataService.js          # Dummy data service
+│   │   ├── DatabaseService.js           # Real database service
+│   │   └── MachineDataSync.js           # Machine integration service
+│   │
 │   ├── requests/
-│   │   └── data.js                       # Data fetching utilities
+│   │   └── data.js                      # Data fetching utilities
 │   │
 │   └── utils/
-│       ├── access.js                     # LocalStorage access helpers
-│       ├── chartConfig.js                # Chart configuration
-│       ├── config.js                     # App configuration
-│       ├── constant.js                   # Constants & default data
-│       ├── function.js                   # Utility functions
-│       ├── protected.jsx                 # Protected route component
-│       └── storageHelper.js              # Storage helpers
+│       ├── access.js                    # LocalStorage access helpers
+│       ├── chartConfig.js               # Chart configuration
+│       ├── config.js                    # App configuration
+│       ├── constant.js                  # Constants & default data
+│       ├── function.js                  # Utility functions
+│       ├── protected.jsx                # Protected route component
+│       └── storageHelper.js             # Storage helpers
 │
-├── components.json                       # Shadcn/UI config
+├── components.json                      # Shadcn/UI config
 ├── eslint.config.js
 ├── index.html
 ├── jsconfig.json
 ├── package.json
 ├── vite.config.js
-└── vercel.json                          # Vercel deployment config
+├── vercel.json                          # Vercel deployment config
+├── DEVELOPMENT_PLAN.md                  # NEW: Complete development plan
+├── SIDEBAR_STRUCTURE.md                 # NEW: Sidebar structure guide
+└── QUICK_REFERENCE.md                   # NEW: Quick reference guide
 ```
 
 ---
 
 ## Alur Data
 
-### 1. Data Source Management Flow
+### 🔄 **Complete Manufacturing System Data Flow**
+
+### 1. **UI First Development Flow (Phase 1A)**
 
 ```
-User Upload JSON File
+Development Phase: UI + Dummy Data
         │
         ▼
-FileReader API (base64)
+src/data/dummyData.js
+        │
+        ├─ Master Data Dummy (Access Levels, Users, Machines, Spareparts)
+        ├─ System Data Dummy (Andon Tickets, Maintenance, Traceability)
+        └─ Dashboard Data Dummy (Widgets, Layouts, Configurations)
         │
         ▼
-localStorage.setItem("dataSources", [...])
+DummyDataService.js
+        │
+        ├─ CRUD Operations dengan Mock Data
+        ├─ Data Validation & Error Handling
+        └─ Simulate Real Database Operations
         │
         ▼
-SourceContext.loadSources()
+UI Components dengan Props
         │
         ▼
-utils.base64ToText() → Parse JSON
-        │
-        ▼
-SourceContext.sources [Array]
-        │
-        ▼
-Available for Widgets
+Test All Workflows dengan Mock Data
 ```
 
-### 2. Dashboard & Layout Management Flow
+### 2. **Authentication & User Management Flow**
 
 ```
-Route Change (e.g., /inf-prod)
+User Login
         │
         ▼
-LayoutContext.ensureDashboardExists(id_dash)
+AuthProvider.login(credentials)
         │
-        ├─ Dashboard exists?
-        │  ├─ YES: Load from localStorage
-        │  └─ NO: Create new dashboard entry
-        │
-        ▼
-Load layout & components for active dashboard
+        ├─ Validate against dummy users
+        ├─ Set user session
+        └─ Store in localStorage
         │
         ▼
-Container.jsx renders React Grid Layout
+Line Selection Page
+        │
+        ├─ Display available lines
+        ├─ Show line status & efficiency
+        └─ User selects line
         │
         ▼
-Map components → Render Widgets/Cards/Datatables
+AuthProvider.selectLine(lineId)
         │
         ▼
-User interacts (drag, resize, configure)
+Navigate to Dashboard with Line Context
         │
         ▼
-onLayoutChange → updateLayout()
-        │
-        ▼
-Save to localStorage("dashboard_list")
+Dynamic Sidebar based on Line + User Access Level
 ```
 
-### 3. Widget Configuration Flow
+### 3. **Master Data Management Flow**
 
 ```
-User clicks "Configure" on Widget
+Master Data Page Access
+        │
+        ├─ Check User Access Level (Admin/Technician/Operator)
+        ├─ Load Master Data dari DummyDataService
+        └─ Display Table dengan CRUD Operations
         │
         ▼
-SheetContext.setSheetOpen(true)
+Add/Edit Modal
+        │
+        ├─ Form Validation
+        ├─ Data Processing
+        └─ Update DummyDataService
         │
         ▼
-AppSheet displays configuration form
-        │
-        ├─ Select Data Source
-        ├─ Select Chart Type
-        ├─ Configure X/Y data or KPI values
-        └─ Click "Apply"
+Real-time Table Update
         │
         ▼
-handleSaveSheet()
-        │
-        ▼
-updateComponent() → Merge new props
-        │
-        ▼
-Save to localStorage
-        │
-        ▼
-Widget re-renders with new config
+Data Available untuk Other Systems
 ```
 
-### 4. Data Rendering Flow
+### 4. **Andon System Workflow**
 
 ```
-Widget Component Mounts
+Operator Reports Issue
+        │
+        ├─ Create Andon Ticket
+        ├─ Select Machine & Issue Type
+        ├─ Set Priority Level
+        └─ Submit Ticket
         │
         ▼
-useContext(SourceContext)
+System Notifies Technician
+        │
+        ├─ Real-time Notification
+        ├─ Ticket appears in Technician Queue
+        └─ Status: "Open"
         │
         ▼
-getById(props.id_resource_data)
+Technician Response
+        │
+        ├─ Accept Ticket
+        ├─ Set Arrival Time
+        ├─ Add Resolution Details
+        └─ Close Ticket
         │
         ▼
-Retrieved JSON data
+System Updates Status
+        │
+        ├─ Calculate Response Time (MTTR)
+        ├─ Update Machine Status
+        └─ Generate Performance Metrics
+```
+
+### 5. **Maintenance System Workflow**
+
+```
+Maintenance Ticket Creation
+        │
+        ├─ Operator/Technician creates ticket
+        ├─ Select Machine & Problem Type
+        ├─ Add Problem Description
+        └─ Set Priority & Schedule
         │
         ▼
-Pass to Chart Component (e.g., AppChartBar)
+Maintenance Planning
+        │
+        ├─ Check Sparepart Availability
+        ├─ Schedule Maintenance Time
+        ├─ Assign Technician
+        └─ Create Work Order
         │
         ▼
-Transform data based on x_data & yData props
+Maintenance Execution
+        │
+        ├─ Technician performs maintenance
+        ├─ Record Sparepart Usage
+        ├─ Update Machine Status
+        └─ Document Repair Details
         │
         ▼
-Recharts renders visualization
+Completion & Reporting
+        │
+        ├─ Close Maintenance Ticket
+        ├─ Update Machine History
+        ├─ Calculate Maintenance Metrics
+        └─ Schedule Next Maintenance
+```
+
+### 6. **Dashboard & Widget Management Flow**
+
+```
+Line Dashboard Access
+        │
+        ├─ Load Line-specific Dashboard Config
+        ├─ Get User Access Level
+        └─ Render Dynamic Sidebar
+        │
+        ▼
+Widget Rendering
+        │
+        ├─ Load Widget Configuration
+        ├─ Fetch Data from DummyDataService
+        ├─ Render Chart/Table/Card
+        └─ Handle User Interactions
+        │
+        ▼
+Widget Configuration
+        │
+        ├─ User clicks Configure
+        ├─ Open Configuration Modal
+        ├─ Select Data Source & Chart Type
+        └─ Apply Configuration
+        │
+        ▼
+Save Configuration
+        │
+        ├─ Update Widget Props
+        ├─ Save to Dashboard Config
+        └─ Re-render Widget
+```
+
+### 7. **Machine Integration Flow (Phase 1C)**
+
+```
+External Machine Database
+        │
+        ├─ Real-time Machine Status
+        ├─ Production Data
+        ├─ Sensor Readings
+        └─ Error Logs
+        │
+        ▼
+API Interface
+        │
+        ├─ MachineDataSync Service
+        ├─ Data Validation & Processing
+        ├─ Error Handling & Retry Logic
+        └─ Offline Data Queuing
+        │
+        ▼
+Internal Hub Database
+        │
+        ├─ Store Processed Data
+        ├─ Update Machine Status
+        ├─ Generate Alerts
+        └─ Update Dashboard Data
+        │
+        ▼
+UI System Update
+        │
+        ├─ Real-time Dashboard Updates
+        ├─ Machine Status Changes
+        ├─ Production Metrics
+        └─ Alert Notifications
+```
+
+### 8. **Database Migration Flow (Phase 1B)**
+
+```
+Dummy Data Service
+        │
+        ▼
+Database Service Implementation
+        │
+        ├─ Setup Internal Database (PostgreSQL/MySQL)
+        ├─ Create Database Schema
+        ├─ Implement CRUD Operations
+        └─ Add Data Validation
+        │
+        ▼
+Migration Process
+        │
+        ├─ Export Dummy Data
+        ├─ Transform to Database Format
+        ├─ Import to Real Database
+        └─ Update Service Layer
+        │
+        ▼
+Production Ready System
+        │
+        ├─ Real Data Persistence
+        ├─ Data Backup & Recovery
+        ├─ Performance Optimization
+        └─ Security Implementation
 ```
 
 ---
@@ -1261,29 +1502,176 @@ export default defineConfig({
 
 ## Future Roadmap
 
-### Phase 1: Performance (Month 1-2)
-- ✅ Implement memoization
-- ✅ Add data caching
-- ✅ Debounce layout saves
-- ✅ Lazy load widgets
+### 🚀 **Complete Manufacturing System Development Roadmap**
 
-### Phase 2: Features (Month 3-4)
-- 🔄 Real-time data updates
-- 🔄 Export dashboard as PDF
-- 🔄 Share dashboard functionality
-- 🔄 Custom color themes
+### **📅 Current Development Phase (October - December 2025)**
 
-### Phase 3: Infrastructure (Month 5-6)
-- 🔄 Backend API
-- 🔄 Database integration
-- 🔄 User authentication
-- 🔄 Multi-tenancy support
+**Timeline**: 8 weeks (October 12 - December 7, 2025)
+**Focus**: Core Manufacturing System with UI Previews
+**Deliverables**: Fully functional manufacturing system ready for production
 
-### Phase 4: Advanced (Month 7+)
-- 🔄 AI-powered insights
-- 🔄 Predictive analytics
-- 🔄 Automated alerts
-- 🔄 Mobile app
+---
+
+### **Phase 1: Manufacturing System Foundation (Week 1-2) - Oct 12-26**
+
+#### **Week 1 (Oct 12-19): Master Data & System UI**
+- ✅ **Master Data UI**: Access Level, Users, Machines, Spareparts pages
+- ✅ **System UI**: Andon, Maintenance, Traceability workflows
+- ✅ **Dummy Data Service**: Mock data untuk semua sistem
+- ✅ **Navigation**: Sidebar, routing, authentication flow
+
+#### **Week 2 (Oct 20-26): Dashboard UI & Widgets**
+- ✅ **Dashboard UI**: Line-specific dashboards dengan manufacturing widgets
+- ✅ **New Widgets**: OEE Donut Chart, Machine Layout, Calendar
+- ✅ **Authentication UI**: Login, Line Selection, Access Control
+- ✅ **Testing**: UI testing dengan dummy data
+
+### **Phase 2: Database Integration (Week 3-4) - Oct 27 - Nov 9**
+
+#### **Week 3 (Oct 27 - Nov 2): Internal Database Setup**
+- 🔄 **Database Schema**: Master Data, System Data, Dashboard Data
+- 🔄 **Database Service**: CRUD operations implementation
+- 🔄 **Data Migration**: Replace dummy data dengan real database
+- 🔄 **Testing**: Database integration testing
+
+#### **Week 4 (Nov 3-9): Data Validation & Optimization**
+- 🔄 **Data Validation**: Input validation dan error handling
+- 🔄 **Performance Optimization**: Caching, indexing, query optimization
+- 🔄 **Security**: Authentication, authorization, data encryption
+- 🔄 **Testing**: End-to-end testing dengan real data
+
+### **Phase 3: Machine Integration & Polish (Week 5-6) - Nov 10-23**
+
+#### **Week 5 (Nov 10-16): Machine Data Integration**
+- 🔄 **Machine Data Sync**: API interface untuk external machine databases
+- 🔄 **Real-time Integration**: Live machine status dan production data
+- 🔄 **Offline Capability**: Data queuing dan processing
+- 🔄 **Testing**: Integration testing dengan machine APIs
+
+#### **Week 6 (Nov 17-23): UI/UX Polish & Optimization**
+- 🔄 **UI Refinement**: Polish all pages berdasarkan feedback
+- 🔄 **Performance**: Optimize loading times dan responsiveness
+- 🔄 **Error Handling**: Comprehensive error handling dan user feedback
+- 🔄 **Documentation**: User guide dan technical documentation
+
+### **Phase 4: Testing & Deployment (Week 7-8) - Nov 24 - Dec 7**
+
+#### **Week 7 (Nov 24-30): Comprehensive Testing**
+- 🔄 **User Acceptance Testing**: Test dengan actual users
+- 🔄 **Performance Testing**: Load testing dan stress testing
+- 🔄 **Security Testing**: Vulnerability assessment
+- 🔄 **Bug Fixes**: Fix all critical and high-priority bugs
+
+#### **Week 8 (Dec 1-7): Production Deployment**
+- 🔄 **Production Setup**: Deploy to manufacturing environment
+- 🔄 **Data Migration**: Migrate initial data
+- 🔄 **User Training**: Train operators, technicians, administrators
+- 🔄 **Go-Live**: Launch system for production use
+
+### **🎯 Current Phase Success Metrics**
+
+| Phase | Key Deliverables | Target Date | Status |
+|-------|------------------|-------------|--------|
+| **Phase 1** | Complete UI with Dummy Data | Oct 26, 2025 | 🔄 In Progress |
+| **Phase 2** | Database Integration | Nov 9, 2025 | ⏳ Pending |
+| **Phase 3** | Machine Integration & Polish | Nov 23, 2025 | ⏳ Pending |
+| **Phase 4** | Production Deployment | Dec 7, 2025 | ⏳ Pending |
+
+### **📊 Current Phase Timeline Summary**
+
+```
+Week 1 (Oct 12-19):  Master Data & System UI
+Week 2 (Oct 20-26):  Dashboard UI & Widgets
+Week 3 (Oct 27-Nov 2):  Internal Database Setup
+Week 4 (Nov 3-9):  Data Validation & Optimization
+Week 5 (Nov 10-16):  Machine Data Integration
+Week 6 (Nov 17-23):  UI/UX Polish & Optimization
+Week 7 (Nov 24-30):  Comprehensive Testing
+Week 8 (Dec 1-7):  Production Deployment
+```
+
+**Current Phase Duration**: 8 weeks (October 12 - December 7, 2025)
+**Approach**: UI First → Database → Machine Integration → Production
+
+---
+
+## 🔮 **Next Development Phase (Future Proposal)**
+
+### **📋 Proposed Advanced Features (Q1 2026 - Future Development)**
+
+**Note**: Features berikut akan diajukan sebagai next development phase setelah current system stable di production.
+
+### **Phase 5: Advanced Manufacturing Features (Proposed)**
+
+#### **Enhanced Dashboard Features**
+- 📝 **Machine Detail Dashboard**: Individual machine monitoring
+- 📝 **Interactive Machine Layout**: Clickable SVG machine layouts
+- 📝 **Advanced OEE Analytics**: Detailed OEE calculations dan reporting
+- 📝 **Performance Metrics**: MTTR, MTBF, Availability tracking
+
+#### **Advanced System Features**
+- 📝 **Predictive Maintenance**: AI-powered maintenance scheduling
+- 📝 **Quality Control Integration**: Quality metrics dan defect tracking
+- 📝 **Inventory Management**: Sparepart tracking dan reorder automation
+- 📝 **Advanced Reporting**: Custom reports dan analytics
+
+#### **Mobile & Accessibility**
+- 📝 **Mobile App**: React Native atau PWA
+- 📝 **Offline Support**: Complete offline functionality
+- 📝 **Accessibility**: WCAG compliance
+- 📝 **Multi-language Support**: Internationalization
+
+### **Phase 6: Enterprise Features (Proposed)**
+
+#### **Multi-Plant Support**
+- 📝 **Multi-Plant Architecture**: Support multiple manufacturing plants
+- 📝 **Centralized Management**: Plant-wide monitoring dan control
+- 📝 **Data Synchronization**: Cross-plant data sharing
+- 📝 **Role-based Access**: Plant-specific access control
+
+#### **Integration & APIs**
+- 📝 **ERP Integration**: SAP, Oracle, Microsoft Dynamics
+- 📝 **MES Integration**: Manufacturing Execution Systems
+- 📝 **SCADA Integration**: Supervisory Control and Data Acquisition
+- 📝 **API Gateway**: RESTful APIs untuk third-party integration
+
+#### **Advanced Analytics**
+- 📝 **Machine Learning**: Predictive analytics dan anomaly detection
+- 📝 **Digital Twin**: Virtual machine representations
+- 📝 **Simulation**: Production planning dan optimization
+- 📝 **Business Intelligence**: Advanced reporting dan dashboards
+
+### **Phase 7: Industry 4.0 Features (Proposed)**
+
+#### **IoT Integration**
+- 📝 **IoT Device Management**: Sensor dan device connectivity
+- 📝 **Edge Computing**: Local data processing
+- 📝 **Real-time Streaming**: High-frequency data processing
+- 📝 **Device Security**: IoT security protocols
+
+#### **AI & Automation**
+- 📝 **Automated Decision Making**: AI-powered process optimization
+- 📝 **Natural Language Processing**: Voice commands dan chatbots
+- 📝 **Computer Vision**: Quality inspection automation
+- 📝 **Robotic Integration**: Robot monitoring dan control
+
+#### **Cloud & Scalability**
+- 📝 **Cloud Deployment**: AWS, Azure, Google Cloud
+- 📝 **Microservices Architecture**: Scalable service architecture
+- 📝 **Container Orchestration**: Kubernetes deployment
+- 📝 **Global Distribution**: Multi-region deployment
+
+### **📊 Future Development Proposal Summary**
+
+| Phase | Focus Area | Estimated Duration | Priority |
+|-------|-----------|-------------------|----------|
+| **Phase 5** | Advanced Manufacturing Features | 8-10 weeks | High |
+| **Phase 6** | Enterprise Features | 10-12 weeks | Medium |
+| **Phase 7** | Industry 4.0 & IoT | 12-16 weeks | Low |
+
+**Total Estimated Time for Future Phases**: 30-38 weeks (~7-9 months)
+**Proposal Status**: Pending approval after current phase completion
+**Dependencies**: Successful production deployment of current phase
 
 ---
 
