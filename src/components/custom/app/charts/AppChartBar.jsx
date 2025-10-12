@@ -58,14 +58,27 @@ function AppChartBar({ ...props }) {
 
 		const cfg = {};
 		yKeys.forEach((key, idx) => {
-			const randomColor = colors[Math.floor(Math.random() * colors.length)];
+			// Smart color assignment based on chart title and key
+			let color;
+			if (props.title?.toLowerCase().includes('downtime')) {
+				color = '#EF4444'; // Red for downtime
+			} else if (key === 'target') {
+				color = '#60A5FA'; // Blue for target
+			} else if (key === 'actual') {
+				color = '#34D399'; // Green for actual
+			} else if (props.title?.toLowerCase().includes('electric') || key === 'consumption') {
+				color = '#FBBF24'; // Yellow/Orange for electric
+			} else {
+				color = colors[idx % colors.length];
+			}
+
 			cfg[key] = {
 				label: props.yData[idx]?.label || key,
-				color: randomColor,
+				color: color,
 			};
 		});
 		setConfig(cfg);
-	}, [props.id_resource_data, props.yData, props.x_data]);
+	}, [props.id_resource_data, props.yData, props.x_data, props.title]);
 
 	autoHeight();
 
@@ -103,22 +116,36 @@ function AppChartBar({ ...props }) {
 					className="aspect-auto w-full h-full chartbar"
 					ref={chartbar}
 				>
-					<BarChart accessibilityLayer data={datas}>
-						<CartesianGrid vertical={false} />
+					<BarChart
+						accessibilityLayer
+						data={datas}
+						margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+					>
+						<CartesianGrid
+							vertical={false}
+							strokeDasharray="3 3"
+							stroke="#374151"
+							opacity={0.3}
+						/>
 						<XAxis
 							dataKey={props?.x_data}
 							tickLine={false}
 							axisLine={false}
 							tickMargin={8}
+							tick={{ fill: '#9CA3AF', fontSize: 12 }}
 						/>
-						<ChartTooltip content={<ChartTooltipContent className="max-w" />} />
+						<ChartTooltip
+							content={<ChartTooltipContent className="max-w" />}
+							cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
+						/>
 
 						{activeKeys.map((yKey, index) => (
 							<Bar
 								key={yKey}
 								dataKey={yKey}
 								fill={config[yKey]?.color || colors[index % colors.length]}
-								barSize={40}
+								radius={[6, 6, 0, 0]}
+								barSize={activeKeys.length > 1 ? 24 : 32}
 							/>
 						))}
 					</BarChart>

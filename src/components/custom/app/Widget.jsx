@@ -17,6 +17,9 @@ const AppChartBar = lazy(() => import('./charts/AppChartBar'));
 const AppChartPie = lazy(() => import('./charts/AppChartPie'));
 const AppChartArea = lazy(() => import('./charts/AppChartArea'));
 const AppChartGauge = lazy(() => import('./charts/AppChartGauge'));
+const OEEDonutChart = lazy(() => import('./OEEDonutChart'));
+const MachineLayout = lazy(() => import('./MachineLayout'));
+const CalendarWidget = lazy(() => import('./CalendarWidget'));
 
 const Widget = ({ props, elementId }) => {
     const { layout, components, updateLayout, updateComponent } = useContext(LayoutContext)
@@ -93,6 +96,36 @@ const Widget = ({ props, elementId }) => {
                         <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>Loading...</CardDescription>
                     } key={item.i}>
                         {<AppChartGauge {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
+                    </Suspense>
+                );
+            }
+
+            if (item.i === elementId && item?.props?.chart_type == 'donut') {
+                return (
+                    <Suspense fallback={
+                        <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>Loading...</CardDescription>
+                    } key={item.i}>
+                        {<OEEDonutChart {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
+                    </Suspense>
+                );
+            }
+
+            if (item.i === elementId && item?.props?.chart_type == 'machine_layout') {
+                return (
+                    <Suspense fallback={
+                        <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>Loading...</CardDescription>
+                    } key={item.i}>
+                        {<MachineLayout {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
+                    </Suspense>
+                );
+            }
+
+            if (item.i === elementId && item?.props?.chart_type == 'calendar') {
+                return (
+                    <Suspense fallback={
+                        <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>Loading...</CardDescription>
+                    } key={item.i}>
+                        {<CalendarWidget {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
                     </Suspense>
                 );
             }
@@ -241,6 +274,9 @@ function AppSheetChildren({ props, elementId }) {
                                 <SelectItem value="pie">Pie Chart</SelectItem>
                                 <SelectItem value="area">Area Chart</SelectItem>
                                 <SelectItem value="gauge">Gauge Chart</SelectItem>
+                                <SelectItem value="donut">OEE Donut Chart</SelectItem>
+                                <SelectItem value="machine_layout">Machine Layout</SelectItem>
+                                <SelectItem value="calendar">Calendar Widget</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -314,6 +350,61 @@ function AppSheetChildren({ props, elementId }) {
                                     defaultValue={Math.max(props?.max_rate || SAFE_MIN_GAUGE, SAFE_MIN_GAUGE)}
                                     onChange={(e) => setSheetFormValue("max_rate", e.target.value)}
                                 />
+                            </div>
+                        </>
+                    )}
+
+                    {['donut'].includes(sheetForm?.chart_type ?? props?.chart_type) && (
+                        <>
+                            <SheetTitle>OEE Donut Chart Configuration</SheetTitle>
+                            <SheetDescription>This widget displays OEE metrics with breakdown (Availability, Performance, Quality) and production data (Cycle Time, Part OK, Part NG).</SheetDescription>
+                            <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-xs text-blue-700 dark:text-blue-300">
+                                <p className="font-semibold mb-1">📊 Required Data Fields:</p>
+                                <ul className="list-disc list-inside space-y-1">
+                                    <li>availability (percentage)</li>
+                                    <li>performance (percentage)</li>
+                                    <li>quality (percentage)</li>
+                                    <li>cycle_time (seconds)</li>
+                                    <li>part_ok (count)</li>
+                                    <li>part_ng (count)</li>
+                                </ul>
+                            </div>
+                        </>
+                    )}
+
+                    {['machine_layout'].includes(sheetForm?.chart_type ?? props?.chart_type) && (
+                        <>
+                            <SheetTitle>Machine Layout Configuration</SheetTitle>
+                            <SheetDescription>This widget displays interactive machine layout from Master Data. Machines are automatically loaded based on current line.</SheetDescription>
+                            <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg text-xs text-green-700 dark:text-green-300">
+                                <p className="font-semibold mb-1">🏭 Features:</p>
+                                <ul className="list-disc list-inside space-y-1">
+                                    <li>Auto-loads machines from Master Data</li>
+                                    <li>Filters by current line (line_1, line_2, line_3)</li>
+                                    <li>Color-coded status (Running, Idle, Alarm, etc.)</li>
+                                    <li>Auto-generates connections between machines</li>
+                                    <li>Clickable machines → navigate to detail page</li>
+                                </ul>
+                                <p className="mt-2 font-semibold">⚙️ No additional configuration needed!</p>
+                            </div>
+                        </>
+                    )}
+
+                    {['calendar'].includes(sheetForm?.chart_type ?? props?.chart_type) && (
+                        <>
+                            <SheetTitle>Calendar Widget Configuration</SheetTitle>
+                            <SheetDescription>This widget displays an interactive calendar with Engineering Call and Maintenance counters.</SheetDescription>
+                            <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-lg text-xs text-purple-700 dark:text-purple-300">
+                                <p className="font-semibold mb-1">📅 Required Data Fields:</p>
+                                <ul className="list-disc list-inside space-y-1">
+                                    <li>current_month (string, e.g., &quot;October 2025&quot;)</li>
+                                    <li>current_date (number, e.g., 12)</li>
+                                    <li>engineering_calls (number, e.g., 3)</li>
+                                    <li>maintenance_calls (number, e.g., 2)</li>
+                                    <li>events (array, optional for date indicators)</li>
+                                    <li>highlighted_dates (array, optional)</li>
+                                </ul>
+                                <p className="mt-2 font-semibold">📞 Displays Engineering Call & Maintenance counters!</p>
                             </div>
                         </>
                     )}

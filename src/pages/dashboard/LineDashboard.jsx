@@ -12,8 +12,8 @@ const LineDashboard = () => {
     // Map lineId to unique dashboard ID
     const getLineDashboardId = (lineId) => {
         const lineIdMap = {
-            'line_1': 1,   // Line 1 uses dashboard ID 1
-            'line_2': 2,   // Line 2 uses dashboard ID 2
+            'line_1': 2,   // Line 1 uses dashboard ID 2 (with new widgets)
+            'line_2': 1,   // Line 2 uses dashboard ID 1 (default)
             'line_3': 3,   // Line 3 uses dashboard ID 3
         };
         return lineIdMap[lineId] || 1;

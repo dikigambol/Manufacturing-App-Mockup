@@ -12,7 +12,6 @@ const Card = lazy(() => import('../components/custom/app/AppCard'));
 
 export const Container = () => {
     const { updateLayout, layout, components } = useContext(LayoutContext)
-    const [state, setState] = useState()
     const [isLoading, setIsLoading] = useState(true)
 
     // Show loading state initially
@@ -39,9 +38,9 @@ export const Container = () => {
         })
     };
 
-    const onChangeLayout = () => {
+    const onChangeLayout = (newLayout) => {
         const filtered = ['w', 'h', 'x', 'y', 'i', 'static'];
-        const newLayouts = state.map(item => Object.fromEntries(
+        const newLayouts = newLayout.map(item => Object.fromEntries(
             filtered.map(key => [key, item[key]])
         ));
         updateLayout(newLayouts)
@@ -87,12 +86,6 @@ export const Container = () => {
         });
     }, [components, layout]);
 
-    useMemo(() => {
-        if (state) {
-            onChangeLayout();
-        }
-    }, [state]);
-
     // Conditional rendering after all hooks
     if (isLoading) {
         return <LoadingDashboard />
@@ -129,7 +122,7 @@ export const Container = () => {
                 isDraggable={true}
                 isResizable={true}
                 draggableHandle=".drag-handle"
-                onLayoutChange={(layout) => setState(layout)}
+                onLayoutChange={onChangeLayout}
                 className="dashboard-grid"
             >
                 {renderComponen}
