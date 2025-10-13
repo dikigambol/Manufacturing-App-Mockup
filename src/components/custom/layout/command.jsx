@@ -2,25 +2,74 @@ import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, C
 import { LayoutContext } from '@/contexts/interact';
 import { allFeatures } from "@/utils/config";
 import { utils } from "@/utils/function";
-import { ArrowRight, SearchCheck } from 'lucide-react';
+import { ArrowRight, SearchCheck, LayoutPanelTop } from 'lucide-react';
 import { useContext, useEffect, useState } from "react";
+import DummyDataService from '@/services/DummyDataService';
 
 export function AppCommand() {
-    const { updateComponent, components } = useContext(LayoutContext)
+    const { updateComponent, components, layout, updateLayout } = useContext(LayoutContext)
     const [state, setState] = useState([])
     const [open, setOpen] = useState(false)
 
     const getData = () => {
-        setState(allFeatures)
+        // Get base features
+        const baseFeatures = [...allFeatures];
+
+        // Load saved layout templates for current line
+        const currentLine = localStorage.getItem('selectedLine') || 'line_1';
+        const allTemplates = DummyDataService.getLayoutTemplates();
+        const lineTemplates = allTemplates.filter(t => t.line_id === currentLine);
+
+        // Add saved templates as widgets if any exist
+        if (lineTemplates.length > 0) {
+            const templateFeatures = {
+                category: 'Saved Layout Templates',
+                feature: lineTemplates.map(template => ({
+                    id: 'Widget',
+                    label: `📐 ${template.name}`,
+                    props: {
+                        title: template.name,
+                        chart_type: 'layout',
+                        template_id: template.id,
+                        template_name: template.name,
+                        description: template.description || `Saved layout: ${template.name}`,
+                        fileData: {
+                            layout: template.nodes,
+                            connections: template.edges
+                        }
+                    }
+                }))
+            };
+            baseFeatures.push(templateFeatures);
+        }
+
+        setState(baseFeatures);
     }
 
     const updateState = ({ label, element, props }) => {
+        const newId = utils.generateName(6).toString();
+
+        // Calculate next available position
+        const maxY = layout.length > 0 ? Math.max(...layout.map(l => l.y + l.h)) : 0;
+
+        // Add component
         updateComponent([...components, {
             label,
             component: element,
-            i: utils.generateName(6).toString(),
+            i: newId,
             props
-        }])
+        }]);
+
+        // Add layout with proper default position
+        updateLayout([...layout, {
+            i: newId,
+            x: 0,
+            y: maxY, // Stack below existing widgets
+            w: 12,   // Default width (1/4 of screen)
+            h: 15,   // Default height
+            static: false
+        }]);
+
         setOpen((open) => !open)
     }
 
@@ -34,6 +83,13 @@ export function AppCommand() {
         document.addEventListener("keydown", down)
         return () => document.removeEventListener("keydown", down)
     }, [])
+
+    // Reload templates when dialog opens
+    useEffect(() => {
+        if (open) {
+            getData(); // Refresh templates list when opening
+        }
+    }, [open])
 
     return (
         <>

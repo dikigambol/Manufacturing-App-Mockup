@@ -77,7 +77,7 @@ const AppCard = ({ props, elementId }) => {
 
   return (
     <Card className='overflow-hidden w-full h-full gap-0 p-1 z-9'>
-      <CardHeader className='p-1 flex items-center justify-between mb-2'>
+      <CardHeader className='p-1 flex items-center justify-between mb-2 drag-handle cursor-move hover:bg-slate-50 dark:hover:bg-slate-800 rounded-t-lg transition-colors'>
         <CardTitle className='truncate font-semibold text-sm ml-2'>{props?.title}</CardTitle>
         <CardAction>
           <DropdownMenu>

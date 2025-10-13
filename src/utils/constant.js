@@ -257,27 +257,143 @@ export const default_dash = [
     "component": [
       {
         "label": "Widget",
-        "i": "pjKlOB",
+        "i": "CrOtPL",
         "props": {
-          "title": "Cycle Time",
-          "chart_type": "area",
-          "id_resource_data": 1755265039617,
-          "x_data": "hour",
-          "yData": [
-            {
-              "label": "cycle_time",
-              "value": "cycle_time"
-            }
-          ],
-          "value_kpi": "",
-          "max_rate": ""
+          "title": "OEE (Overall Equipment Effectiveness)",
+          "chart_type": "donut",
+          "id_resource_data": 1755265050554
         }
       },
       {
         "label": "Widget",
-        "i": "CrOtPL",
+        "i": "MachLayout",
         "props": {
-          "title": "OEE",
+          "title": "LAYOUT ENGINE ASSEMBLY - LINE 1",
+          "chart_type": "machine_layout",
+          "id_resource_data": 1755270000001
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "CalendarMain",
+        "props": {
+          "title": "Production Calendar",
+          "chart_type": "calendar",
+          "id_resource_data": 1755270000002
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "DowntimeChart",
+        "props": {
+          "title": "Downtime (minutes)",
+          "chart_type": "bar",
+          "id_resource_data": 1755270000003,
+          "x_data": "month",
+          "yData": [
+            {
+              "label": "downtime",
+              "value": "downtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "TargetActualChart",
+        "props": {
+          "title": "Target vs Actual (units)",
+          "chart_type": "bar",
+          "id_resource_data": 1755270000004,
+          "x_data": "month",
+          "yData": [
+            {
+              "label": "target",
+              "value": "target"
+            },
+            {
+              "label": "actual",
+              "value": "actual"
+            }
+          ]
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "ElectricChart",
+        "props": {
+          "title": "Electric Consumption (KWH)",
+          "chart_type": "bar",
+          "id_resource_data": 1755270000005,
+          "x_data": "month",
+          "yData": [
+            {
+              "label": "consumption",
+              "value": "consumption"
+            }
+          ]
+        }
+      }
+    ],
+    "layout": [
+      {
+        "w": 10,
+        "h": 25,
+        "x": 0,
+        "y": 0,
+        "i": "CrOtPL",
+        "static": false
+      },
+      {
+        "w": 28,
+        "h": 25,
+        "x": 10,
+        "y": 0,
+        "i": "MachLayout",
+        "static": false
+      },
+      {
+        "w": 10,
+        "h": 25,
+        "x": 38,
+        "y": 0,
+        "i": "CalendarMain",
+        "static": false
+      },
+      {
+        "w": 16,
+        "h": 20,
+        "x": 0,
+        "y": 25,
+        "i": "DowntimeChart",
+        "static": false
+      },
+      {
+        "w": 16,
+        "h": 20,
+        "x": 16,
+        "y": 25,
+        "i": "TargetActualChart",
+        "static": false
+      },
+      {
+        "w": 16,
+        "h": 20,
+        "x": 32,
+        "y": 25,
+        "i": "ElectricChart",
+        "static": false
+      }
+    ]
+  },
+  {
+    "id_dash": 3,
+    "component": [
+      {
+        "label": "Widget",
+        "i": "line3_oee",
+        "props": {
+          "title": "OEE Monitoring",
           "chart_type": "gauge",
           "id_resource_data": 1755265050554,
           "x_data": [],
@@ -287,10 +403,30 @@ export const default_dash = [
         }
       },
       {
-        "label": "Widget",
-        "i": "BAakEv",
+        "label": "Card",
+        "i": "line3_target",
         "props": {
-          "title": "Comparation Production & Rejected Engines",
+          "title": "Production Target",
+          "chart_type": "gauge",
+          "id_resource_data": 1755265864644,
+          "x_data": [],
+          "yData": [],
+          "value_kpi": "value",
+          "max_rate": "100",
+          "card_type": "kpi",
+          "subtitle_kpi": "subtitle",
+          "percentage_kpi": "percentage",
+          "data_1": "",
+          "title_1": "",
+          "data_2": "",
+          "title_2": ""
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "line3_prod",
+        "props": {
+          "title": "Production vs Reject",
           "chart_type": "bar",
           "id_resource_data": 1755265080795,
           "x_data": "tanggal",
@@ -310,120 +446,57 @@ export const default_dash = [
       },
       {
         "label": "Widget",
-        "i": "ldDqsw",
+        "i": "line3_cycle",
         "props": {
-          "title": "Actual Production",
-          "chart_type": "bar",
-          "id_resource_data": 1755265013522,
-          "x_data": "tanggal",
+          "title": "Cycle Time Trend",
+          "chart_type": "area",
+          "id_resource_data": 1755265039617,
+          "x_data": "hour",
           "yData": [
             {
-              "label": "unit",
-              "value": "unit"
+              "label": "cycle_time",
+              "value": "cycle_time"
             }
           ],
           "value_kpi": "",
-          "max_rate": "",
-          "card_type": "stat",
-          "subtitle_kpi": [],
-          "percentage_kpi": "",
-          "data_1": "target_unit",
-          "title_1": "Target Count",
-          "data_2": "actual_unit",
-          "title_2": "Actual Count"
-        }
-      },
-      {
-        "label": "Card",
-        "i": "FCvGYH",
-        "props": {
-          "title": "Gap Target & Actual",
-          "id_resource_data": 1755265095961,
-          "x_data": [],
-          "yData": [],
-          "value_kpi": [],
-          "max_rate": "",
-          "card_type": "stat",
-          "subtitle_kpi": [],
-          "percentage_kpi": "",
-          "data_1": "target_unit",
-          "title_1": "Target Count",
-          "data_2": "actual_unit",
-          "title_2": "Actual Count"
-        }
-      },
-      {
-        "label": "Card",
-        "i": "WHLGiX",
-        "props": {
-          "title": "Production Target",
-          "card_type": "kpi",
-          "id_resource_data": 1755265864644,
-          "value_kpi": "value",
-          "subtitle_kpi": "subtitle",
-          "percentage_kpi": "percentage",
-          "data_1": "",
-          "title_1": "",
-          "data_2": "",
-          "title_2": ""
+          "max_rate": ""
         }
       }
     ],
     "layout": [
       {
-        "w": 16,
-        "h": 19,
+        "w": 12,
+        "h": 20,
         "x": 0,
         "y": 0,
-        "i": "pjKlOB",
+        "i": "line3_oee",
         "static": false
       },
       {
-        "w": 10,
-        "h": 19,
-        "x": 16,
+        "w": 12,
+        "h": 10,
+        "x": 12,
         "y": 0,
-        "i": "CrOtPL",
+        "i": "line3_target",
         "static": false
       },
       {
-        "w": 16,
-        "h": 18,
-        "x": 0,
-        "y": 19,
-        "i": "BAakEv",
+        "w": 12,
+        "h": 15,
+        "x": 12,
+        "y": 10,
+        "i": "line3_prod",
         "static": false
       },
       {
-        "w": 16,
-        "h": 18,
-        "x": 16,
-        "y": 19,
-        "i": "ldDqsw",
-        "static": false
-      },
-      {
-        "w": 10,
-        "h": 19,
-        "x": 26,
+        "w": 24,
+        "h": 20,
+        "x": 24,
         "y": 0,
-        "i": "FCvGYH",
-        "static": false
-      },
-      {
-        "w": 9,
-        "h": 9,
-        "x": 7,
-        "y": 93,
-        "i": "WHLGiX",
+        "i": "line3_cycle",
         "static": false
       }
     ]
-  },
-  {
-    "id_dash": 3,
-    "component": [],
-    "layout": []
   },
   {
     "id_dash": 4,
@@ -642,6 +715,46 @@ export const default_dash = [
         "static": false
       }
     ]
+  },
+  {
+    "id_dash": 4,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 5,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 6,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 7,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 8,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 9,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 10,
+    "component": [],
+    "layout": []
+  },
+  {
+    "id_dash": 11,
+    "component": [],
+    "layout": []
   }
 ]
 
@@ -665,7 +778,7 @@ export const default_source_data = [
     "name": "OEE",
     "type": "json",
     "fileName": "OEE.json",
-    "fileData": "data:application/json;base64,ew0KICAiYXZhaWxhYmlsaXR5IjogODguNSwNCiAgInBlcmZvcm1hbmNlIjogOTIuMCwNCiAgInF1YWxpdHkiOiA5Ni44LA0KICAidG90YWxfb2VlIjogNzguOQ0KfQ=="
+    "fileData": "data:application/json;base64,eyJhdmFpbGFiaWxpdHkiOjg4LjUsInBlcmZvcm1hbmNlIjo5Mi4wLCJxdWFsaXR5Ijo5Ni44LCJ0b3RhbF9vZWUiOjc4LjksImN5Y2xlX3RpbWUiOjIxLjQsInBhcnRfb2siOjExMDAsInBhcnRfbmciOjR9Cg=="
   },
   {
     "id": 1755265080795,
@@ -694,6 +807,41 @@ export const default_source_data = [
     "type": "json",
     "fileName": "incidentcount.json",
     "fileData": "data:application/json;base64,Ww0KICB7DQogICAgInR5cGUiOiAidGVycGVsZXNldCIsDQogICAgImNvdW50IjogNQ0KICB9LA0KICB7DQogICAgInR5cGUiOiAidGVya2VuYV9hbGF0IiwNCiAgICAiY291bnQiOiA4DQogIH0sDQogIHsNCiAgICAidHlwZSI6ICJ0ZXJqYXR1aCIsDQogICAgImNvdW50IjogMw0KICB9LA0KICB7DQogICAgInR5cGUiOiAidGVyamVwaXRfbWVzaW4iLA0KICAgICJjb3VudCI6IDQNCiAgfSwNCiAgew0KICAgICJ0eXBlIjogInRlcmJha2FyIiwNCiAgICAiY291bnQiOiAyDQogIH0sDQogIHsNCiAgICAidHlwZSI6ICJ0ZXJrZW5hX2JlbmRhX3RhamFtIiwNCiAgICAiY291bnQiOiA2DQogIH0sDQogIHsNCiAgICAidHlwZSI6ICJ0ZXJwYXBhcl9iYWhhbl9raW1pYSIsDQogICAgImNvdW50IjogMQ0KICB9LA0KICB7DQogICAgInR5cGUiOiAidGVyc2VuZ2F0X2xpc3RyaWsiLA0KICAgICJjb3VudCI6IDINCiAgfSwNCiAgew0KICAgICJ0eXBlIjogImtlY2VsYWthYW5fa2VuZGFyYWFuIiwNCiAgICAiY291bnQiOiAzDQogIH0sDQogIHsNCiAgICAidHlwZSI6ICJsYWlubnlhIiwNCiAgICAiY291bnQiOiA3DQogIH0NCl0="
+  },
+  {
+    "id": 1755270000001,
+    "name": "Machine Layout - Line 1",
+    "type": "json",
+    "fileName": "machine_layout_line1.json",
+    "fileData": "data:application/json;base64,eyJsYXlvdXQiOlt7Im1hY2hpbmVfaWQiOiJNQ0gtMDAxIiwieCI6NTAsInkiOjEwMCwid2lkdGgiOjE0MCwiaGVpZ2h0Ijo3MH0seyJtYWNoaW5lX2lkIjoiTUNILTAwMiIsIngiOjIyMCwieSI6MTAwLCJ3aWR0aCI6MTQwLCJoZWlnaHQiOjcwfSx7Im1hY2hpbmVfaWQiOiJNQ0gtMDAzIiwieCI6MzkwLCJ5IjoxMDAsIndpZHRoIjoxNDAsImhlaWdodCI6NzB9XSwiY29ubmVjdGlvbnMiOlt7ImZyb20iOnsieCI6MTkwLCJ5IjoxMzV9LCJ0byI6eyJ4IjoyMjAsInkiOjEzNX0sInR5cGUiOiJjb252ZXlvciJ9LHsiZnJvbSI6eyJ4IjozNjAsInkiOjEzNX0sInRvIjp7IngiOjM5MCwieSI6MTM1fSwidHlwZSI6ImNvbnZleW9yIn1dfQ=="
+  },
+  {
+    "id": 1755270000002,
+    "name": "Calendar - October 2025",
+    "type": "json",
+    "fileName": "calendar_october_2025.json",
+    "fileData": "data:application/json;base64,eyJjdXJyZW50X21vbnRoIjoiT2N0b2JlciAyMDI1IiwiY3VycmVudF9kYXRlIjoxMiwiZW5naW5lZXJpbmdfY2FsbHMiOjMsIm1haW50ZW5hbmNlX2NhbGxzIjoyLCJldmVudHMiOlt7ImRhdGUiOjMsInRpdGxlIjoiUHJldmVudGl2ZSBNYWludGVuYW5jZSIsImRlc2NyaXB0aW9uIjoiTnV0IFJ1bm5lciBDeWwgSGVhZCAxIn0seyJkYXRlIjo4LCJ0aXRsZSI6IlNhZmV0eSBJbnNwZWN0aW9uIiwiZGVzY3JpcHRpb24iOiJNb250aGx5IHNhZmV0eSBjaGVjayJ9LHsiZGF0ZSI6MTIsInRpdGxlIjoiUHJvZHVjdGlvbiBSZXZpZXciLCJkZXNjcmlwdGlvbiI6IldlZWtseSBwZXJmb3JtYW5jZSByZXZpZXcifSx7ImRhdGUiOjE1LCJ0aXRsZSI6IkVxdWlwbWVudCBDYWxpYnJhdGlvbiIsImRlc2NyaXB0aW9uIjoiTGVhayBUZXN0ZXIgY2FsaWJyYXRpb24ifSx7ImRhdGUiOjIwLCJ0aXRsZSI6IlRlYW0gTWVldGluZyIsImRlc2NyaXB0aW9uIjoiTW9udGhseSB0ZWFtIHN5bmMifSx7ImRhdGUiOjI1LCJ0aXRsZSI6IkludmVudG9yeSBDaGVjayIsImRlc2NyaXB0aW9uIjoiU3BhcmVwYXJ0cyBpbnZlbnRvcnkifV0sImhpZ2hsaWdodGVkX2RhdGVzIjpbMyw4LDE1LDE5LDI1XX0="
+  },
+  {
+    "id": 1755270000003,
+    "name": "Downtime (minutes)",
+    "type": "json",
+    "fileName": "downtime_monthly.json",
+    "fileData": "data:application/json;base64,W3sibW9udGgiOiJKYW4iLCJkb3dudGltZSI6MTV9LHsibW9udGgiOiJGZWIiLCJkb3dudGltZSI6MjJ9LHsibW9udGgiOiJNYXIiLCJkb3dudGltZSI6MTh9LHsibW9udGgiOiJBcHIiLCJkb3dudGltZSI6MTJ9LHsibW9udGgiOiJNYXkiLCJkb3dudGltZSI6MjV9LHsibW9udGgiOiJKdW4iLCJkb3dudGltZSI6MjB9LHsibW9udGgiOiJKdWwiLCJkb3dudGltZSI6MTZ9LHsibW9udGgiOiJBdWciLCJkb3dudGltZSI6MTl9LHsibW9udGgiOiJTZXAiLCJkb3dudGltZSI6MTR9LHsibW9udGgiOiJPY3QiLCJkb3dudGltZSI6MjF9LHsibW9udGgiOiJOb3YiLCJkb3dudGltZSI6MTd9LHsibW9udGgiOiJEZWMiLCJkb3dudGltZSI6MTN9XQ=="
+  },
+  {
+    "id": 1755270000004,
+    "name": "Target vs Actual (units)",
+    "type": "json",
+    "fileName": "target_vs_actual.json",
+    "fileData": "data:application/json;base64,W3sibW9udGgiOiJKYW4iLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo0ODB9LHsibW9udGgiOiJGZWIiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo0OTV9LHsibW9udGgiOiJNYXIiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo1MTB9LHsibW9udGgiOiJBcHIiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo0ODV9LHsibW9udGgiOiJNYXkiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo1MDV9LHsibW9udGgiOiJKdW4iLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo0OTB9LHsibW9udGgiOiJKdWwiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo1MDB9LHsibW9udGgiOiJBdWciLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo1MTV9LHsibW9udGgiOiJTZXAiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo0OTV9LHsibW9udGgiOiJPY3QiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo1MjB9LHsibW9udGgiOiJOb3YiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo1MDV9LHsibW9udGgiOiJEZWMiLCJ0YXJnZXQiOjUwMCwiYWN0dWFsIjo1MTB9XQ=="
+  },
+  {
+    "id": 1755270000005,
+    "name": "Electric Consumption (KWH)",
+    "type": "json",
+    "fileName": "electric_consumption.json",
+    "fileData": "data:application/json;base64,W3sibW9udGgiOiJKYW4iLCJjb25zdW1wdGlvbiI6MTIwMH0seyJtb250aCI6IkZlYiIsImNvbnN1bXB0aW9uIjoxMzUwfSx7Im1vbnRoIjoiTWFyIiwiY29uc3VtcHRpb24iOjEyODB9LHsibW9udGgiOiJBcHIiLCJjb25zdW1wdGlvbiI6MTE1MH0seyJtb250aCI6Ik1heSIsImNvbnN1bXB0aW9uIjoxNDAwfSx7Im1vbnRoIjoiSnVuIiwiY29uc3VtcHRpb24iOjEzMjB9LHsibW9udGgiOiJKdWwiLCJjb25zdW1wdGlvbiI6MTI1MH0seyJtb250aCI6IkF1ZyIsImNvbnN1bXB0aW9uIjoxMzgwfSx7Im1vbnRoIjoiU2VwIiwiY29uc3VtcHRpb24iOjEyMjB9LHsibW9udGgiOiJPY3QiLCJjb25zdW1wdGlvbiI6MTM2MH0seyJtb250aCI6Ik5vdiIsImNvbnN1bXB0aW9uIjoxMjkwfSx7Im1vbnRoIjoiRGVjIiwiY29uc3VtcHRpb24iOjEyNDB9XQ=="
   },
   {
     "id": 1755266250978,
