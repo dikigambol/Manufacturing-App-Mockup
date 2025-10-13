@@ -34,7 +34,8 @@ import {
   PackageSearch,
   Bell,
   ClipboardList,
-  History
+  History,
+  LayoutPanelTop
 } from 'lucide-react'
 
 // Get sidebar data based on active line
@@ -64,20 +65,8 @@ export const getSidebarData = (lineId) => {
           {
             title: 'Overview',
             url: '/dashboard/line_1',
-            id_dash: 1,
+            id_dash: 2,
             icon: BarChart3,
-          },
-          {
-            title: 'Production Monitoring',
-            url: '/dashboard/production',
-            id_dash: 5,
-            icon: Factory,
-          },
-          {
-            title: 'Machine Status',
-            url: '/dashboard/machines',
-            id_dash: 6,
-            icon: TrendingUp,
           },
         ]
       },
@@ -168,6 +157,11 @@ export const getSidebarData = (lineId) => {
             title: 'Data Resources',
             url: '/data-resources',
             icon: Database,
+          },
+          {
+            title: 'Layout Designer',
+            url: '/layout-designer',
+            icon: LayoutPanelTop,
           },
           {
             title: 'Settings',
@@ -184,20 +178,8 @@ export const getSidebarData = (lineId) => {
           {
             title: 'Overview',
             url: '/dashboard/line_2',
-            id_dash: 2,
+            id_dash: 1,
             icon: BarChart3,
-          },
-          {
-            title: 'Production Monitoring',
-            url: '/dashboard/production',
-            id_dash: 5,
-            icon: Factory,
-          },
-          {
-            title: 'Machine Status',
-            url: '/dashboard/machines',
-            id_dash: 6,
-            icon: TrendingUp,
           },
         ]
       },
@@ -288,6 +270,11 @@ export const getSidebarData = (lineId) => {
             title: 'Data Resources',
             url: '/data-resources',
             icon: Database,
+          },
+          {
+            title: 'Layout Designer',
+            url: '/layout-designer',
+            icon: LayoutPanelTop,
           },
           {
             title: 'Settings',
@@ -307,18 +294,6 @@ export const getSidebarData = (lineId) => {
             id_dash: 3,
             icon: BarChart3,
           },
-          {
-            title: 'Production Monitoring',
-            url: '/dashboard/production',
-            id_dash: 5,
-            icon: Factory,
-          },
-          {
-            title: 'Machine Status',
-            url: '/dashboard/machines',
-            id_dash: 6,
-            icon: TrendingUp,
-          },
         ]
       },
       {
@@ -408,6 +383,11 @@ export const getSidebarData = (lineId) => {
             title: 'Data Resources',
             url: '/data-resources',
             icon: Database,
+          },
+          {
+            title: 'Layout Designer',
+            url: '/layout-designer',
+            icon: LayoutPanelTop,
           },
           {
             title: 'Settings',
@@ -484,6 +464,11 @@ export const getSidebarData = (lineId) => {
           title: 'Data Resources',
           url: '/data-resources',
           icon: Database,
+        },
+        {
+          title: 'Layout Designer',
+          url: '/layout-designer',
+          icon: LayoutPanelTop,
         },
       ]
     },

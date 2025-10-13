@@ -1,0 +1,170 @@
+/* ========================================
+   Machine Layout (SVG-based) - Scoped Styles
+   ======================================== 
+   
+   This CSS is ONLY for SVG-based machine layout widget
+   NOT for React Flow version
+   ======================================== */
+
+/* Container */
+.machine-layout-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Empty state styling */
+.machine-layout-container .empty-state {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* SVG Machine Node - Base styling */
+.machine-node {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* SVG Machine Node - Hover effect (no jumping) */
+.machine-node:hover rect {
+    stroke-width: 4;
+    filter: brightness(1.1);
+}
+
+/* Prevent transform issues on SVG */
+.machine-node rect,
+.machine-node text,
+.machine-node circle {
+    transform-origin: center center;
+}
+
+/* SVG text - prevent selection */
+.machine-node text {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    pointer-events: none;
+}
+
+/* Connection lines animation */
+.machine-node circle[fill="#60A5FA"] {
+    animation: flow-animation 3s linear infinite;
+}
+
+@keyframes flow-animation {
+    0% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.8;
+    }
+}
+
+/* Status badges */
+.machine-layout-container .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Legend styling */
+.machine-layout-container .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    color: rgb(156, 163, 175);
+}
+
+.machine-layout-container .legend-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 0.125rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* SVG hover popup */
+.machine-node-popup {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Alarm animation */
+@keyframes pulse-alarm {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.machine-layout-container .alarm-badge {
+    animation: pulse-alarm 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Template selector styling */
+.machine-layout-container .template-selector {
+    margin-bottom: 0.5rem;
+}
+
+/* Machine count badges */
+.machine-layout-container .count-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* SVG container - ensure proper rendering */
+.machine-layout-container svg {
+    width: 100%;
+    height: 100%;
+    /* Prevent text selection in SVG */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+/* Responsive scaling */
+.machine-layout-container .svg-wrapper {
+    flex: 1;
+    position: relative;
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+/* Loading/Empty state centering */
+.machine-layout-container .centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: rgb(156, 163, 175);
+}
+
+/* Button styling within layout */
+.machine-layout-container button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}

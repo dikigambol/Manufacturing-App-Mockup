@@ -1,58 +1,152 @@
 import React, { useState, useEffect } from 'react';
+import './MachineLayout.css'; // Scoped styles for SVG-based layout
 import DummyDataService from '@/services/DummyDataService';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { LayoutPanelTop, RefreshCw } from 'lucide-react';
 
-const MachineLayout = ({ dataItem }) => {
+const MachineLayout = ({ dataItem, template_id }) => {
     const [hoveredMachine, setHoveredMachine] = useState(null);
     const [machines, setMachines] = useState([]);
+    const [availableTemplates, setAvailableTemplates] = useState([]);
+    const [selectedTemplate, setSelectedTemplate] = useState(null);
+    const [useTemplate, setUseTemplate] = useState(false);
 
-    // Get layout configuration from data source
+    // Get layout configuration from data source OR from template_id prop
     const layoutConfig = dataItem?.fileData?.layout || [];
     const connections = dataItem?.fileData?.connections || [];
 
+    // Load template if template_id is provided via widget configuration
     useEffect(() => {
-        // Load machines from Master Data
+        if (template_id && template_id !== 'auto') {
+            const template = DummyDataService.getLayoutTemplate(template_id);
+            if (template) {
+                setSelectedTemplate(template);
+                setUseTemplate(true);
+            }
+        }
+    }, [template_id]);
+
+    // Load available templates on mount
+    useEffect(() => {
+        const loadTemplates = () => {
+            const currentLine = localStorage.getItem('selectedLine') || 'line_1';
+            const allTemplates = DummyDataService.getLayoutTemplates();
+            // Filter templates by current line
+            const lineTemplates = allTemplates.filter(t => t.line_id === currentLine);
+            setAvailableTemplates(lineTemplates);
+        };
+        loadTemplates();
+    }, []);
+
+    // Convert React Flow node positions to SVG coordinates
+    const convertReactFlowToSVG = (node, index) => {
+        return {
+            id: node.data?.machine_id || `MCH-${index + 1}`,
+            name: node.data?.name || 'Unknown Machine',
+            x: node.position.x / 4, // Scale down from React Flow coordinates
+            y: node.position.y / 2,
+            width: 140,
+            height: 70,
+            status: node.data?.status || 'disconnected',
+            hasAlarm: node.data?.status === 'alarm',
+            needsMaintenance: node.data?.needsMaintenance || false,
+            type: node.data?.machine_type
+        };
+    };
+
+    // Convert React Flow edges to SVG connections
+    const convertEdgesToConnections = (edges, nodesMap) => {
+        return edges.map(edge => {
+            const sourceNode = nodesMap[edge.source];
+            const targetNode = nodesMap[edge.target];
+
+            if (!sourceNode || !targetNode) return null;
+
+            return {
+                from: {
+                    x: sourceNode.x + sourceNode.width / 2,
+                    y: sourceNode.y + sourceNode.height / 2
+                },
+                to: {
+                    x: targetNode.x + targetNode.width / 2,
+                    y: targetNode.y + targetNode.height / 2
+                },
+                type: 'conveyor'
+            };
+        }).filter(Boolean);
+    };
+
+    useEffect(() => {
+        // Load machines from Master Data or Template
         const loadMachines = async () => {
             try {
-                console.log('Loading machines, layoutConfig:', layoutConfig);
-                const allMachines = await DummyDataService.machines.getAll();
-                console.log('All machines from Master Data:', allMachines);
+                if (useTemplate && selectedTemplate) {
+                    // Load from selected template
+                    console.log('Loading from template:', selectedTemplate);
+                    const template = DummyDataService.getLayoutTemplate(selectedTemplate);
 
-                // Merge Master Data with Layout Config
-                const mergedMachines = layoutConfig.map(config => {
-                    // Find machine in Master Data by machine_id
-                    const masterMachine = allMachines.find(m => m.machine_id === config.machine_id);
-                    console.log(`Merging ${config.machine_id}:`, { config, masterMachine });
+                    if (template && template.nodes) {
+                        // Convert React Flow format to SVG format
+                        const svgMachines = template.nodes.map(convertReactFlowToSVG);
 
-                    return {
-                        id: config.machine_id,
-                        name: masterMachine?.name || config.name || 'Unknown',
-                        x: config.x,
-                        y: config.y,
-                        width: config.width || 140,
-                        height: config.height || 70,
-                        status: masterMachine?.status || 'disconnected',
-                        hasAlarm: masterMachine?.status === 'alarm',
-                        needsMaintenance: masterMachine?.status === 'maintenance' || masterMachine?.status === 'idle',
-                        asset_no: masterMachine?.asset_no,
-                        type: masterMachine?.machine_type
-                    };
-                });
+                        // Create nodes map for edge conversion
+                        const nodesMap = {};
+                        svgMachines.forEach(machine => {
+                            nodesMap[template.nodes.find(n => n.data.machine_id === machine.id)?.id] = machine;
+                        });
 
-                console.log('Merged machines:', mergedMachines);
-                setMachines(mergedMachines);
+                        // Convert edges to connections
+                        const svgConnections = template.edges ? convertEdgesToConnections(template.edges, nodesMap) : [];
+
+                        setMachines(svgMachines);
+                        // Note: connections would need to be stored in state if we want to display them
+                    }
+                } else {
+                    // Original logic - load from data source
+                    console.log('Loading machines, layoutConfig:', layoutConfig);
+                    const allMachines = await DummyDataService.machines.getAll();
+                    console.log('All machines from Master Data:', allMachines);
+
+                    // Merge Master Data with Layout Config
+                    const mergedMachines = layoutConfig.map(config => {
+                        // Find machine in Master Data by machine_id
+                        const masterMachine = allMachines.find(m => m.machine_id === config.machine_id);
+                        console.log(`Merging ${config.machine_id}:`, { config, masterMachine });
+
+                        return {
+                            id: config.machine_id,
+                            name: masterMachine?.name || config.name || 'Unknown',
+                            x: config.x,
+                            y: config.y,
+                            width: config.width || 140,
+                            height: config.height || 70,
+                            status: masterMachine?.status || 'disconnected',
+                            hasAlarm: masterMachine?.status === 'alarm',
+                            needsMaintenance: masterMachine?.status === 'maintenance' || masterMachine?.status === 'idle',
+                            asset_no: masterMachine?.asset_no,
+                            type: masterMachine?.machine_type
+                        };
+                    });
+
+                    console.log('Merged machines:', mergedMachines);
+                    setMachines(mergedMachines);
+                }
             } catch (error) {
                 console.error('Error loading machines:', error);
                 // Fallback: use layout config only
-                setMachines(layoutConfig);
+                if (!useTemplate) {
+                    setMachines(layoutConfig);
+                }
             }
         };
 
-        if (layoutConfig.length > 0) {
+        if ((useTemplate && selectedTemplate) || layoutConfig.length > 0) {
             loadMachines();
         } else {
-            console.log('No layoutConfig found, dataItem:', dataItem);
+            console.log('No layoutConfig or template selected');
         }
-    }, [dataItem]);
+    }, [dataItem, useTemplate, selectedTemplate]);
 
     // Status color mapping
     const getStatusColor = (status) => {
@@ -74,13 +168,28 @@ const MachineLayout = ({ dataItem }) => {
     };
 
     // Show loading or empty state
-    if (machines.length === 0) {
+    if (machines.length === 0 && !useTemplate) {
         return (
             <div className="machine-layout-container w-full h-full flex items-center justify-center">
                 <div className="text-center text-gray-400">
                     <div className="text-4xl mb-2">🏭</div>
                     <p className="text-sm">No machines configured</p>
-                    <p className="text-xs mt-1">Select "Machine Layout - Line 1" from Data Resource</p>
+                    <p className="text-xs mt-1 mb-4">Select "Machine Layout - Line 1" from Data Resource</p>
+
+                    {availableTemplates.length > 0 && (
+                        <div className="mt-4 space-y-2">
+                            <p className="text-sm font-semibold">Or use a saved template:</p>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setUseTemplate(true)}
+                                className="gap-2"
+                            >
+                                <LayoutPanelTop className="h-4 w-4" />
+                                View Templates ({availableTemplates.length})
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -88,6 +197,56 @@ const MachineLayout = ({ dataItem }) => {
 
     return (
         <div className="machine-layout-container w-full h-full flex flex-col p-2">
+            {/* Template Selector */}
+            {availableTemplates.length > 0 && (
+                <div className="mb-2 flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-1">
+                        <LayoutPanelTop className="h-4 w-4 text-gray-400" />
+                        <Select
+                            value={useTemplate && selectedTemplate ? selectedTemplate : 'data-source'}
+                            onValueChange={(value) => {
+                                if (value === 'data-source') {
+                                    setUseTemplate(false);
+                                    setSelectedTemplate(null);
+                                } else {
+                                    setUseTemplate(true);
+                                    setSelectedTemplate(value);
+                                }
+                            }}
+                        >
+                            <SelectTrigger className="h-8 text-xs flex-1">
+                                <SelectValue placeholder="Select layout source..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="data-source">
+                                    📊 Data Source Layout
+                                </SelectItem>
+                                {availableTemplates.map((template) => (
+                                    <SelectItem key={template.id} value={template.id}>
+                                        {template.thumbnail || '📋'} {template.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {useTemplate && (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                                // Refresh template
+                                setSelectedTemplate(null);
+                                setTimeout(() => setSelectedTemplate(selectedTemplate), 100);
+                            }}
+                            className="h-8 px-2"
+                        >
+                            <RefreshCw className="h-3 w-3" />
+                        </Button>
+                    )}
+                </div>
+            )}
+
             {/* Machine Count Badge */}
             <div className="mb-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">

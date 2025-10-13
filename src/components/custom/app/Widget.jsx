@@ -12,6 +12,7 @@ import { local } from "@/utils/access";
 import { BadgeX, Lock, LockOpen, Settings, Settings2 } from "lucide-react";
 import { lazy, Suspense, useContext, useEffect, useMemo, useState } from "react";
 import Multiple from "./multipel";
+import DummyDataService from "@/services/DummyDataService";
 
 const AppChartBar = lazy(() => import('./charts/AppChartBar'));
 const AppChartPie = lazy(() => import('./charts/AppChartPie'));
@@ -19,6 +20,7 @@ const AppChartArea = lazy(() => import('./charts/AppChartArea'));
 const AppChartGauge = lazy(() => import('./charts/AppChartGauge'));
 const OEEDonutChart = lazy(() => import('./OEEDonutChart'));
 const MachineLayout = lazy(() => import('./MachineLayout'));
+const MachineLayoutReactFlow = lazy(() => import('./MachineLayoutReactFlow'));
 const CalendarWidget = lazy(() => import('./CalendarWidget'));
 
 const Widget = ({ props, elementId }) => {
@@ -110,12 +112,12 @@ const Widget = ({ props, elementId }) => {
                 );
             }
 
-            if (item.i === elementId && item?.props?.chart_type == 'machine_layout') {
+            if (item.i === elementId && (item?.props?.chart_type == 'machine_layout' || item?.props?.chart_type == 'layout')) {
                 return (
                     <Suspense fallback={
                         <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>Loading...</CardDescription>
                     } key={item.i}>
-                        {<MachineLayout {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
+                        {<MachineLayoutReactFlow template_id={item.props?.template_id} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
                     </Suspense>
                 );
             }
@@ -150,6 +152,8 @@ const Widget = ({ props, elementId }) => {
                                 });
                                 setSheetFormValue('chart_type', props?.chart_type);
                                 setSheetFormValue('id_resource_data', props?.id_resource_data);
+                                setSheetFormValue('template_id', props?.template_id);
+                                setSheetFormValue('template_name', props?.template_name);
                                 setSheetOpen(true)
                             }}>
                                 <Settings2 />
@@ -170,7 +174,12 @@ const Widget = ({ props, elementId }) => {
             {props?.chart_type ?
                 renderCard
                 :
-                <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No Content Available</CardDescription>
+                <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full p-8'>
+                    <div className="space-y-2 text-center">
+                        <p className="font-semibold">Widget Not Configured</p>
+                        <p className="text-xs">Click the ⚙️ icon above to configure this widget</p>
+                    </div>
+                </CardDescription>
             }
         </Card>
     );
@@ -372,20 +381,64 @@ function AppSheetChildren({ props, elementId }) {
                         </>
                     )}
 
-                    {['machine_layout'].includes(sheetForm?.chart_type ?? props?.chart_type) && (
+                    {['machine_layout', 'layout'].includes(sheetForm?.chart_type ?? props?.chart_type) && (
                         <>
                             <SheetTitle>Machine Layout Configuration</SheetTitle>
-                            <SheetDescription>This widget displays interactive machine layout from Master Data. Machines are automatically loaded based on current line.</SheetDescription>
+                            <SheetDescription>This widget displays interactive machine layout from Master Data or saved templates.</SheetDescription>
+
+                            {/* Template Selector */}
+                            <div className="space-y-2">
+                                <Label>Layout Template (Optional)</Label>
+                                <Select
+                                    value={sheetForm?.template_id ?? props?.template_id ?? 'auto'}
+                                    onValueChange={(value) => {
+                                        // Set to undefined if 'auto' is selected
+                                        setSheetFormValue('template_id', value === 'auto' ? undefined : value);
+                                        // Find template and update title
+                                        const currentLine = localStorage.getItem('selectedLine') || 'line_1';
+                                        const templates = DummyDataService.getLayoutTemplates();
+                                        const template = templates.find(t => t.id === value);
+                                        if (template) {
+                                            setSheetFormValue('template_name', template.name);
+                                        } else if (value === 'auto') {
+                                            setSheetFormValue('template_name', undefined);
+                                        }
+                                    }}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Auto-load from Master Data" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Saved Templates</SelectLabel>
+                                            <SelectItem value="auto">Auto-load from Master Data</SelectItem>
+                                            {(() => {
+                                                const currentLine = localStorage.getItem('selectedLine') || 'line_1';
+                                                const templates = DummyDataService.getLayoutTemplates();
+                                                const lineTemplates = templates.filter(t => t.line_id === currentLine);
+                                                return lineTemplates.map(template => (
+                                                    <SelectItem key={template.id} value={template.id}>
+                                                        {template.name}
+                                                    </SelectItem>
+                                                ));
+                                            })()}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                                <p className="text-xs text-gray-500">
+                                    Select a saved template or leave empty to auto-load from Master Data
+                                </p>
+                            </div>
+
                             <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg text-xs text-green-700 dark:text-green-300">
                                 <p className="font-semibold mb-1">🏭 Features:</p>
                                 <ul className="list-disc list-inside space-y-1">
-                                    <li>Auto-loads machines from Master Data</li>
+                                    <li>Use saved templates from Layout Designer</li>
+                                    <li>Or auto-loads machines from Master Data</li>
                                     <li>Filters by current line (line_1, line_2, line_3)</li>
                                     <li>Color-coded status (Running, Idle, Alarm, etc.)</li>
-                                    <li>Auto-generates connections between machines</li>
                                     <li>Clickable machines → navigate to detail page</li>
                                 </ul>
-                                <p className="mt-2 font-semibold">⚙️ No additional configuration needed!</p>
                             </div>
                         </>
                     )}

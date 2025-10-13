@@ -2,8 +2,9 @@ import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, C
 import { LayoutContext } from '@/contexts/interact';
 import { allFeatures } from "@/utils/config";
 import { utils } from "@/utils/function";
-import { ArrowRight, SearchCheck } from 'lucide-react';
+import { ArrowRight, SearchCheck, LayoutPanelTop } from 'lucide-react';
 import { useContext, useEffect, useState } from "react";
+import DummyDataService from '@/services/DummyDataService';
 
 export function AppCommand() {
     const { updateComponent, components, layout, updateLayout } = useContext(LayoutContext)
@@ -11,7 +12,38 @@ export function AppCommand() {
     const [open, setOpen] = useState(false)
 
     const getData = () => {
-        setState(allFeatures)
+        // Get base features
+        const baseFeatures = [...allFeatures];
+
+        // Load saved layout templates for current line
+        const currentLine = localStorage.getItem('selectedLine') || 'line_1';
+        const allTemplates = DummyDataService.getLayoutTemplates();
+        const lineTemplates = allTemplates.filter(t => t.line_id === currentLine);
+
+        // Add saved templates as widgets if any exist
+        if (lineTemplates.length > 0) {
+            const templateFeatures = {
+                category: 'Saved Layout Templates',
+                feature: lineTemplates.map(template => ({
+                    id: 'Widget',
+                    label: `📐 ${template.name}`,
+                    props: {
+                        title: template.name,
+                        chart_type: 'layout',
+                        template_id: template.id,
+                        template_name: template.name,
+                        description: template.description || `Saved layout: ${template.name}`,
+                        fileData: {
+                            layout: template.nodes,
+                            connections: template.edges
+                        }
+                    }
+                }))
+            };
+            baseFeatures.push(templateFeatures);
+        }
+
+        setState(baseFeatures);
     }
 
     const updateState = ({ label, element, props }) => {
@@ -51,6 +83,13 @@ export function AppCommand() {
         document.addEventListener("keydown", down)
         return () => document.removeEventListener("keydown", down)
     }, [])
+
+    // Reload templates when dialog opens
+    useEffect(() => {
+        if (open) {
+            getData(); // Refresh templates list when opening
+        }
+    }, [open])
 
     return (
         <>

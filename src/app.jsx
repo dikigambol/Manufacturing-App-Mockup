@@ -16,6 +16,8 @@ import MasterDataSpareparts from "@/pages/master-data/MasterDataSpareparts";
 import AndonList from "@/pages/andon/AndonList";
 import MaintenanceList from "@/pages/maintenance/MaintenanceList";
 import TraceabilityList from "@/pages/traceability/TraceabilityList";
+import LayoutDesigner from "@/pages/machine-layout-designer/LayoutDesigner";
+import MachineDetailPage from "@/pages/machines/MachineDetailPage";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router";
 import { SheetProvider } from "./contexts/sheet";
 import { SourceProvider } from "./contexts/source";
@@ -89,6 +91,12 @@ function App() {
                         <Route path="/maintenance/list" element={<MaintenanceList />} />
                         <Route path="/traceability/list" element={<TraceabilityList />} />
                       </Route>
+
+                      {/* Layout Designer - Standalone Full Screen */}
+                      <Route path="/layout-designer" element={<LayoutDesigner />} />
+
+                      {/* Machine Detail - Standalone Full Screen */}
+                      <Route path="/machines/:machineId" element={<MachineDetailPage />} />
                     </Route>
 
                     {/* Default redirect */}

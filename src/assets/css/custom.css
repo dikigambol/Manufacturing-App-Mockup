@@ -42,19 +42,10 @@
   user-select: none;
 }
 
+/* Base resize handle styling */
 .react-grid-item>.react-resizable-handle {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  bottom: 0;
-  right: 0;
-  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=");
-  background-position: bottom right;
-  padding: 0 8px 8px 0;
-  background-repeat: no-repeat;
-  background-origin: content-box;
-  box-sizing: border-box;
-  cursor: se-resize;
+  z-index: 10;
   opacity: 0;
   transition: all 200ms ease;
   transition-property: opacity;
@@ -62,6 +53,101 @@
 
 .react-grid-item:hover>.react-resizable-handle {
   opacity: 1;
+}
+
+/* Ensure resize handles are always on top and clickable */
+.react-grid-item.resizing>.react-resizable-handle {
+  opacity: 1 !important;
+  z-index: 20 !important;
+}
+
+/* South-East Corner Handle (diagonal resize - width & height) */
+.react-grid-item>.react-resizable-handle-se {
+  width: 20px;
+  height: 20px;
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=");
+  background-position: bottom right;
+  padding: 0 8px 8px 0;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+}
+
+/* South Handle (vertical resize - height only) */
+.react-grid-item>.react-resizable-handle-s {
+  width: 100%;
+  height: 10px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: s-resize;
+  background: transparent;
+  border-bottom: 3px solid transparent;
+  transition: all 200ms ease;
+}
+
+.react-grid-item:hover>.react-resizable-handle-s {
+  border-bottom-color: rgb(59 130 246 / 0.5);
+}
+
+.react-grid-item>.react-resizable-handle-s:hover {
+  border-bottom-color: rgb(59 130 246) !important;
+  background: linear-gradient(to bottom, transparent, rgb(59 130 246 / 0.1));
+}
+
+/* East Handle (horizontal resize - width only) */
+.react-grid-item>.react-resizable-handle-e {
+  width: 10px;
+  height: 100%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: e-resize;
+  background: transparent;
+  border-right: 3px solid transparent;
+  transition: all 200ms ease;
+}
+
+.react-grid-item:hover>.react-resizable-handle-e {
+  border-right-color: rgb(59 130 246 / 0.5);
+}
+
+.react-grid-item>.react-resizable-handle-e:hover {
+  border-right-color: rgb(59 130 246) !important;
+  background: linear-gradient(to right, transparent, rgb(59 130 246 / 0.1));
+}
+
+/* South-West Corner Handle (diagonal resize) */
+.react-grid-item>.react-resizable-handle-sw {
+  width: 20px;
+  height: 20px;
+  bottom: 0;
+  left: 0;
+  cursor: sw-resize;
+  background: linear-gradient(135deg, rgb(59 130 246 / 0.3) 0%, transparent 50%);
+}
+
+/* North-East Corner Handle (diagonal resize) */
+.react-grid-item>.react-resizable-handle-ne {
+  width: 20px;
+  height: 20px;
+  top: 0;
+  right: 0;
+  cursor: ne-resize;
+  background: linear-gradient(-135deg, rgb(59 130 246 / 0.3) 0%, transparent 50%);
+}
+
+/* North-West Corner Handle (diagonal resize) */
+.react-grid-item>.react-resizable-handle-nw {
+  width: 20px;
+  height: 20px;
+  top: 0;
+  left: 0;
+  cursor: nw-resize;
+  background: linear-gradient(-45deg, rgb(59 130 246 / 0.3) 0%, transparent 50%);
 }
 
 /* role button */
@@ -206,8 +292,8 @@
   transition: all 200ms ease;
 }
 
-/* Better resize handle visibility */
-.react-grid-item>.react-resizable-handle::after {
+/* Better resize handle visibility - only for corner handles */
+.react-grid-item>.react-resizable-handle-se::after {
   content: '';
   position: absolute;
   right: 3px;
@@ -216,4 +302,224 @@
   height: 5px;
   border-right: 2px solid rgb(59 130 246);
   border-bottom: 2px solid rgb(59 130 246);
+}
+
+.react-grid-item>.react-resizable-handle-sw::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-left: 2px solid rgb(59 130 246);
+  border-bottom: 2px solid rgb(59 130 246);
+}
+
+/* ========================================
+   React Flow - Enhanced Connection UX
+   ======================================== */
+
+/* Make handles more visible during connection */
+.react-flow__handle {
+  opacity: 1 !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+/* Highlight valid connection targets when dragging */
+.react-flow__handle-connecting {
+  background: #10b981 !important;
+  transform: scale(1.5) !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.8) !important;
+  animation: pulse-connection 1s ease-in-out infinite !important;
+}
+
+/* Invalid connection target styling */
+.react-flow__handle-valid {
+  background: #10b981 !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.6) !important;
+}
+
+.react-flow__handle-invalid {
+  background: #ef4444 !important;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.6) !important;
+}
+
+/* Connection line styling (the line that follows your cursor) */
+.react-flow__connectionline {
+  stroke-width: 3 !important;
+  stroke-dasharray: 5, 5 !important;
+  animation: dash 1s linear infinite !important;
+}
+
+/* Pulse animation for handles during connection */
+@keyframes pulse-connection {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+    transform: scale(1.5);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(16, 185, 129, 1);
+    transform: scale(1.6);
+  }
+}
+
+/* Dash animation for connection line */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Edge (connection line) hover effects */
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke-width: 4 !important;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 4 !important;
+  stroke: #3b82f6 !important;
+}
+
+/* Make edge easier to click */
+.react-flow__edge-interaction {
+  stroke-width: 20 !important;
+  cursor: pointer !important;
+}
+
+/* Node selection styling */
+.react-flow__node.selected {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Improve pane interaction */
+.react-flow__pane {
+  cursor: default !important;
+}
+
+.react-flow__pane.react-flow__dragging {
+  cursor: grabbing !important;
+}
+
+/* Handle tooltip-like behavior on hover */
+.react-flow__handle:hover {
+  filter: brightness(1.2) !important;
+  z-index: 10 !important;
+}
+
+/* Better node dragging visual feedback */
+.react-flow__node.dragging {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  opacity: 0.95 !important;
+  z-index: 1000 !important;
+  pointer-events: none !important;
+}
+
+/* Prevent blinking during drag - disable transitions on dragging elements */
+.react-flow__node.dragging,
+.react-flow__node.dragging * {
+  transition: none !important;
+  will-change: transform !important;
+}
+
+/* Smooth transitions for non-dragging nodes */
+.react-flow__node:not(.dragging) {
+  transition: box-shadow 0.2s ease-in-out !important;
+}
+
+/* Optimize rendering performance */
+.react-flow__renderer {
+  will-change: transform;
+}
+
+.react-flow__node {
+  will-change: transform;
+}
+
+/* Prevent flickering on selection change */
+.react-flow__node.selected {
+  transition: box-shadow 0.2s ease-in-out !important;
+}
+
+/* Smooth edge updates */
+.react-flow__edge {
+  transition: stroke 0.2s ease-in-out, stroke-width 0.2s ease-in-out !important;
+}
+
+.react-flow__edge.updating {
+  transition: none !important;
+}
+
+/* ========================================
+   MiniMap Enhancements
+   ======================================== */
+
+/* MiniMap container styling */
+.react-flow__minimap {
+  background: rgb(31, 41, 55) !important;
+  border: 2px solid rgb(55, 65, 81) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
+  overflow: hidden !important;
+}
+
+/* MiniMap viewport (the rectangle showing current view) */
+.react-flow__minimap-mask {
+  fill: rgba(17, 24, 39, 0.75) !important;
+}
+
+/* Viewport indicator - the draggable area */
+.react-flow__minimap-node {
+  transition: fill 0.2s ease-in-out !important;
+}
+
+/* MiniMap hover effect */
+.react-flow__minimap:hover {
+  border-color: rgb(59, 130, 246) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Cursor changes to indicate draggable */
+.react-flow__minimap svg {
+  cursor: grab !important;
+}
+
+.react-flow__minimap svg:active {
+  cursor: grabbing !important;
+}
+
+/* Selected node highlight in minimap */
+.react-flow__minimap-node[stroke="#3b82f6"] {
+  stroke-width: 3 !important;
+  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.8)) !important;
+}
+
+/* Controls styling - Global for all React Flow instances */
+.react-flow__controls {
+  background: rgb(31, 41, 55) !important;
+  border: 2px solid rgb(55, 65, 81) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.react-flow__controls-button {
+  background: rgb(31, 41, 55) !important;
+  border-bottom: 1px solid rgb(55, 65, 81) !important;
+  color: rgb(156, 163, 175) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.react-flow__controls-button:hover {
+  background: rgb(55, 65, 81) !important;
+  color: rgb(59, 130, 246) !important;
+}
+
+.react-flow__controls-button svg {
+  fill: currentColor !important;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none !important;
 }

@@ -820,6 +820,57 @@ const DummyDataService = {
             maintenanceSchedule: [...maintenanceSchedule],
             machineHistory: [...machineHistory]
         };
+    },
+
+    // ============================================
+    // LAYOUT TEMPLATES - LocalStorage based
+    // ============================================
+
+    saveLayoutTemplate(template) {
+        const templates = JSON.parse(localStorage.getItem('layoutTemplates') || '[]');
+        templates.push(template);
+        localStorage.setItem('layoutTemplates', JSON.stringify(templates));
+        return template;
+    },
+
+    getLayoutTemplates() {
+        return JSON.parse(localStorage.getItem('layoutTemplates') || '[]');
+    },
+
+    getLayoutTemplate(id) {
+        const templates = this.getLayoutTemplates();
+        return templates.find(t => t.id === id);
+    },
+
+    deleteLayoutTemplate(id) {
+        const templates = this.getLayoutTemplates();
+        const filtered = templates.filter(t => t.id !== id);
+        localStorage.setItem('layoutTemplates', JSON.stringify(filtered));
+        return { success: true, message: 'Template deleted successfully' };
+    },
+
+    // ============================================
+    // HELPER SHORTCUTS - Direct access without async
+    // ============================================
+
+    getMachines() {
+        return [...machines];
+    },
+
+    getMachine(machineId) {
+        return machines.find(m => m.machine_id === machineId);
+    },
+
+    getUsers() {
+        return [...users];
+    },
+
+    getAccessLevels() {
+        return [...accessLevels];
+    },
+
+    getSpareparts() {
+        return [...spareparts];
     }
 };
 

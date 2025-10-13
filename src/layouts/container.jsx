@@ -33,7 +33,7 @@ export const Container = () => {
                 minW: 6,  // Minimum width
                 minH: 8,  // Minimum height
                 maxW: 48, // Maximum width (full width)
-                maxH: 50, // Maximum height
+                maxH: 100, // Maximum height (increased for flexibility)
             }
         })
     };
@@ -104,7 +104,7 @@ export const Container = () => {
                 </div>
                 {components.length > 0 && (
                     <div className="text-sm text-slate-500 dark:text-slate-400 bg-blue-50 dark:bg-blue-900/20 px-4 py-2 rounded-lg border border-blue-200 dark:border-blue-800">
-                        💡 <span className="font-medium">Tip:</span> Drag widgets by their header to reposition
+                        💡 <span className="font-medium">Tip:</span> Drag widgets by their header to reposition • Hover edges to resize width & height
                     </div>
                 )}
             </div>
@@ -117,7 +117,7 @@ export const Container = () => {
                 containerPadding={[0, 0]}
                 compactType="vertical"
                 preventCollision={false}
-                resizeHandles={["se", "s", "e"]}
+                resizeHandles={["se", "s", "e", "sw"]}
                 useCSSTransforms
                 isDraggable={true}
                 isResizable={true}

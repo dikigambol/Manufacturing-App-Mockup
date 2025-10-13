@@ -1,0 +1,190 @@
+/* ========================================
+   Layout Designer - Scoped Styles
+   ======================================== 
+   
+   This CSS is ONLY for the Layout Designer page
+   Full-screen drag & drop editor
+   ======================================== */
+
+/* Main container */
+.layout-designer-view {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: rgb(17, 24, 39);
+}
+
+/* Nodes - Drag & drop mode (NO scale on hover) */
+.layout-designer-view .react-flow__node {
+    cursor: move;
+    transition: box-shadow 0.2s ease-in-out;
+    /* GPU acceleration for smooth dragging */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: auto;
+}
+
+/* Hover effect - only box-shadow, NO scale */
+.layout-designer-view .react-flow__node:hover {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    /* React Flow needs transform for positioning - don't override it */
+    /* We prevent scale by simply not adding scale transform */
+}
+
+/* Selected node styling */
+.layout-designer-view .react-flow__node.selected {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* Dragging state - smooth movement, no animations */
+.layout-designer-view .react-flow__node.dragging {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    opacity: 0.95;
+    cursor: grabbing;
+    /* Disable transitions during drag for smooth movement */
+    transition: none !important;
+    /* Don't override transform - React Flow needs it for dragging */
+}
+
+/* Disable ALL animations during drag to prevent jumping */
+.layout-designer-view .react-flow__node.dragging *,
+.layout-designer-view .react-flow__node.dragging *::before,
+.layout-designer-view .react-flow__node.dragging *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Prevent any child elements from causing shift */
+.layout-designer-view .react-flow__node * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Disable ALL Tailwind animations to prevent position shifts */
+.layout-designer-view .react-flow__node .animate-pulse,
+.layout-designer-view .react-flow__node .animate-ping,
+.layout-designer-view .react-flow__node .animate-bounce,
+.layout-designer-view .react-flow__node .animate-spin,
+.layout-designer-view .react-flow__node [class*="animate-"] {
+    animation: none !important;
+}
+
+/* Handle visibility and styling - Always visible */
+.layout-designer-view .react-flow__handle {
+    opacity: 1 !important;
+    transition: all 0.2s ease-in-out;
+    cursor: crosshair;
+    z-index: 10;
+    /* Ensure handles are always visible and clickable */
+    pointer-events: all !important;
+}
+
+.layout-designer-view .react-flow__handle:hover {
+    filter: brightness(1.2);
+    z-index: 20;
+    transform: scale(1.3);
+}
+
+/* Connection line styling */
+.layout-designer-view .react-flow__edge-path {
+    stroke-width: 3;
+    transition: stroke-width 0.2s ease-in-out;
+}
+
+.layout-designer-view .react-flow__edge:hover .react-flow__edge-path {
+    stroke-width: 4;
+}
+
+.layout-designer-view .react-flow__edge.selected .react-flow__edge-path {
+    stroke-width: 4;
+    stroke: #3b82f6;
+}
+
+/* Background */
+.layout-designer-view .react-flow__background {
+    background-color: rgb(17, 24, 39);
+}
+
+/* Controls (zoom buttons) */
+.layout-designer-view .react-flow__controls {
+    background: rgb(31, 41, 55);
+    border: 2px solid rgb(55, 65, 81);
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.layout-designer-view .react-flow__controls-button {
+    background: rgb(31, 41, 55);
+    border-bottom: 1px solid rgb(55, 65, 81);
+    color: rgb(156, 163, 175);
+    transition: all 0.2s ease-in-out;
+}
+
+.layout-designer-view .react-flow__controls-button:hover {
+    background: rgb(55, 65, 81);
+    color: rgb(59, 130, 246);
+}
+
+.layout-designer-view .react-flow__controls-button:last-child {
+    border-bottom: none;
+}
+
+/* MiniMap */
+.layout-designer-view .react-flow__minimap {
+    background: rgb(31, 41, 55);
+    border: 2px solid rgb(55, 65, 81);
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.layout-designer-view .react-flow__minimap:hover {
+    border-color: rgb(59, 130, 246);
+}
+
+/* Pane (canvas background) interaction */
+.layout-designer-view .react-flow__pane {
+    cursor: default;
+}
+
+.layout-designer-view .react-flow__pane.react-flow__dragging {
+    cursor: grabbing;
+}
+
+/* Optimize rendering performance */
+.layout-designer-view .react-flow__renderer {
+    will-change: transform;
+}
+
+/* Smooth transitions for non-dragging nodes only */
+.layout-designer-view .react-flow__node:not(.dragging) {
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Ensure stable positioning during any operation */
+.layout-designer-view .react-flow__node,
+.layout-designer-view .react-flow__node * {
+    transform-origin: center center;
+}
+
+/* Prevent flickering on selection change */
+.layout-designer-view .react-flow__node.selected {
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Edge (connection) interaction */
+.layout-designer-view .react-flow__edge-interaction {
+    stroke-width: 20;
+    cursor: pointer;
+}
+
+/* Empty state overlay */
+.layout-designer-view .empty-state-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: rgb(156, 163, 175);
+}
