@@ -107,7 +107,10 @@ const MachineLayoutReactFlowInner = ({ template_id }) => {
             {/* Info Banner */}
             <div className="info-banner">
                 <p className="text-xs text-gray-300">
-                    <span className="text-blue-400 font-semibold">💡 Click</span> on machines to view details
+                    <span className="text-blue-400 font-semibold">💡 Click</span> machines to view details •
+                    <span className="text-green-400 font-semibold"> Drag</span> to pan •
+                    <span className="text-purple-400 font-semibold">Scroll</span> to zoom •
+                    <span className="text-orange-400 font-semibold">Minimap</span> to navigate
                 </p>
             </div>
 
@@ -145,8 +148,8 @@ const MachineLayoutReactFlowInner = ({ template_id }) => {
                 zoomOnPinch={true}
                 zoomOnDoubleClick={false}
                 fitView
-                fitViewOptions={{ padding: 0.1, maxZoom: 1 }}
-                minZoom={0.5}
+                fitViewOptions={{ padding: 0.15, maxZoom: 0.8, minZoom: 0.05 }}
+                minZoom={0.05}
                 maxZoom={2}
                 // Styling
                 defaultEdgeOptions={{
@@ -178,6 +181,8 @@ const MachineLayoutReactFlowInner = ({ template_id }) => {
                     nodeStrokeWidth={2}
                     nodeBorderRadius={8}
                     maskColor="rgba(17, 24, 39, 0.8)"
+                    pannable={true}
+                    zoomable={true}
                 />
             </ReactFlow>
         </div>

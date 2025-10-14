@@ -443,7 +443,9 @@ const LayoutDesignerInner = () => {
                         zoomOnPinch={true}
                         zoomOnDoubleClick={false}
                         fitView
-                        fitViewOptions={{ padding: 0.2 }}
+                        fitViewOptions={{ padding: 0.2, maxZoom: 0.8, minZoom: 0.05 }}
+                        minZoom={0.05}
+                        maxZoom={2}
                         snapToGrid={true}
                         snapGrid={[20, 20]}
                         connectionLineStyle={{ stroke: '#3b82f6', strokeWidth: 3 }}

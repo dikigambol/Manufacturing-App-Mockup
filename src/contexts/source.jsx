@@ -1,5 +1,6 @@
 import { utils } from "@/utils/function";
 import { createContext, useEffect, useState } from "react";
+import { default_source_data } from "@/utils/constant";
 
 export const SourceContext = createContext(undefined);
 
@@ -9,6 +10,18 @@ export const SourceProvider = ({ children }) => {
     const loadSources = () => {
         try {
             const data = localStorage.getItem("dataSources");
+
+            // If localStorage is empty, initialize from default_source_data
+            if (!data || data === "null") {
+                localStorage.setItem("dataSources", JSON.stringify(default_source_data));
+                const initialized = default_source_data.map(item => ({
+                    ...item,
+                    fileData: utils.base64ToText(item?.fileData),
+                }));
+                setSources(initialized);
+                return;
+            }
+
             const stored = JSON.parse(data).map(item => ({
                 ...item,
                 fileData: utils.base64ToText(item?.fileData),
@@ -16,7 +29,13 @@ export const SourceProvider = ({ children }) => {
             setSources(stored || []);
         } catch (err) {
             // console.error("Failed to parse dataSources", err);
-            setSources([]);
+            // On error, initialize from default
+            localStorage.setItem("dataSources", JSON.stringify(default_source_data));
+            const initialized = default_source_data.map(item => ({
+                ...item,
+                fileData: utils.base64ToText(item?.fileData),
+            }));
+            setSources(initialized);
         }
     };
 

@@ -21,8 +21,15 @@ export const Container = () => {
     }, [])
 
     const layouts = {
-        lg: layout.map((item, i) => {
-            const component = components[i];
+        lg: layout.map((item) => {
+            // Match layout with component by ID, not by index
+            const component = components.find(c => c.i === item.i);
+
+            // Skip if component not found (shouldn't happen but safety check)
+            if (!component) {
+                return null;
+            }
+
             return {
                 i: component.i.toString(),
                 x: item.x ?? 0,
@@ -35,7 +42,7 @@ export const Container = () => {
                 maxW: 48, // Maximum width (full width)
                 maxH: 100, // Maximum height (increased for flexibility)
             }
-        })
+        }).filter(Boolean) // Remove null entries
     };
 
     const onChangeLayout = (newLayout) => {

@@ -505,8 +505,220 @@ export const default_dash = [
   },
   {
     "id_dash": 5,
-    "component": [],
-    "layout": []
+    "component": [
+      {
+        "label": "Widget",
+        "i": "L2_OEE_Donut",
+        "props": {
+          "title": "OEE (Overall Equipment Effectiveness)",
+          "chart_type": "donut",
+          "id_resource_data": 1755265050554,
+          "variant": "expanded"
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "L2_MachLayout",
+        "props": {
+          "title": "LAYOUT ENGINE ASSEMBLY - LINE 2",
+          "chart_type": "machine_layout",
+          "id_resource_data": 1755270000006
+        }
+      },
+      {
+        "label": "Card",
+        "i": "L2_CycleTime",
+        "props": {
+          "title": "Cycle Time Line",
+          "chart_type": "gauge",
+          "id_resource_data": 1755265050554,
+          "card_type": "kpi",
+          "value_kpi": "cycle_time",
+          "subtitle_kpi": "Sec",
+          "text_size": "large"
+        }
+      },
+      {
+        "label": "Card",
+        "i": "L2_PartOK",
+        "props": {
+          "title": "Part OK",
+          "chart_type": "gauge",
+          "id_resource_data": 1755265050554,
+          "card_type": "kpi",
+          "value_kpi": "part_ok",
+          "subtitle_kpi": "Part"
+        }
+      },
+      {
+        "label": "Card",
+        "i": "L2_PartNG",
+        "props": {
+          "title": "Part NG",
+          "chart_type": "gauge",
+          "id_resource_data": 1755265050554,
+          "card_type": "kpi",
+          "value_kpi": "part_ng",
+          "subtitle_kpi": "Part"
+        }
+      },
+      {
+        "label": "Card",
+        "i": "L2_EngCall",
+        "props": {
+          "title": "Engineering Call",
+          "card_type": "stat",
+          "id_resource_data": 1755270000002,
+          "data_1": "engineering_calls",
+          "title_1": "Total Calls"
+        }
+      },
+      {
+        "label": "Card",
+        "i": "L2_Maintenance",
+        "props": {
+          "title": "Maintenance",
+          "card_type": "stat",
+          "id_resource_data": 1755270000002,
+          "data_1": "maintenance_calls",
+          "title_1": "Total Calls"
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "L2_DowntimeChart",
+        "props": {
+          "title": "Downtime (minutes)",
+          "chart_type": "bar",
+          "id_resource_data": 1755270000003,
+          "x_data": "month",
+          "yData": [
+            {
+              "label": "downtime",
+              "value": "downtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "L2_TargetActualChart",
+        "props": {
+          "title": "Target vs Actual (units)",
+          "chart_type": "bar",
+          "id_resource_data": 1755270000004,
+          "x_data": "month",
+          "yData": [
+            {
+              "label": "target",
+              "value": "target"
+            },
+            {
+              "label": "actual",
+              "value": "actual"
+            }
+          ]
+        }
+      },
+      {
+        "label": "Widget",
+        "i": "L2_ElectricChart",
+        "props": {
+          "title": "Electric Consumption (KWH)",
+          "chart_type": "bar",
+          "id_resource_data": 1755270000005,
+          "x_data": "month",
+          "yData": [
+            {
+              "label": "consumption",
+              "value": "consumption"
+            }
+          ]
+        }
+      }
+    ],
+    "layout": [
+      {
+        "w": 18,
+        "h": 15,
+        "x": 0,
+        "y": 0,
+        "i": "L2_OEE_Donut",
+        "static": false
+      },
+      {
+        "w": 30,
+        "h": 30,
+        "x": 18,
+        "y": 0,
+        "i": "L2_MachLayout",
+        "static": false
+      },
+      {
+        "w": 9,
+        "h": 15,
+        "x": 0,
+        "y": 15,
+        "i": "L2_CycleTime",
+        "static": false
+      },
+      {
+        "w": 4,
+        "h": 7,
+        "x": 9,
+        "y": 15,
+        "i": "L2_PartOK",
+        "static": false
+      },
+      {
+        "w": 5,
+        "h": 7,
+        "x": 13,
+        "y": 15,
+        "i": "L2_PartNG",
+        "static": false
+      },
+      {
+        "w": 4,
+        "h": 8,
+        "x": 9,
+        "y": 22,
+        "i": "L2_EngCall",
+        "static": false
+      },
+      {
+        "w": 5,
+        "h": 8,
+        "x": 13,
+        "y": 22,
+        "i": "L2_Maintenance",
+        "static": false
+      },
+      {
+        "w": 16,
+        "h": 20,
+        "x": 0,
+        "y": 30,
+        "i": "L2_DowntimeChart",
+        "static": false
+      },
+      {
+        "w": 16,
+        "h": 20,
+        "x": 16,
+        "y": 30,
+        "i": "L2_TargetActualChart",
+        "static": false
+      },
+      {
+        "w": 16,
+        "h": 20,
+        "x": 32,
+        "y": 30,
+        "i": "L2_ElectricChart",
+        "static": false
+      }
+    ]
   },
   {
     "id_dash": 6,
@@ -842,6 +1054,13 @@ export const default_source_data = [
     "type": "json",
     "fileName": "electric_consumption.json",
     "fileData": "data:application/json;base64,W3sibW9udGgiOiJKYW4iLCJjb25zdW1wdGlvbiI6MTIwMH0seyJtb250aCI6IkZlYiIsImNvbnN1bXB0aW9uIjoxMzUwfSx7Im1vbnRoIjoiTWFyIiwiY29uc3VtcHRpb24iOjEyODB9LHsibW9udGgiOiJBcHIiLCJjb25zdW1wdGlvbiI6MTE1MH0seyJtb250aCI6Ik1heSIsImNvbnN1bXB0aW9uIjoxNDAwfSx7Im1vbnRoIjoiSnVuIiwiY29uc3VtcHRpb24iOjEzMjB9LHsibW9udGgiOiJKdWwiLCJjb25zdW1wdGlvbiI6MTI1MH0seyJtb250aCI6IkF1ZyIsImNvbnN1bXB0aW9uIjoxMzgwfSx7Im1vbnRoIjoiU2VwIiwiY29uc3VtcHRpb24iOjEyMjB9LHsibW9udGgiOiJPY3QiLCJjb25zdW1wdGlvbiI6MTM2MH0seyJtb250aCI6Ik5vdiIsImNvbnN1bXB0aW9uIjoxMjkwfSx7Im1vbnRoIjoiRGVjIiwiY29uc3VtcHRpb24iOjEyNDB9XQ=="
+  },
+  {
+    "id": 1755270000006,
+    "name": "Machine Layout - Line 2 (Detailed)",
+    "type": "json",
+    "fileName": "machine_layout_line2_detailed.json",
+    "fileData": "data:application/json;base64,eyJsYXlvdXQiOlt7Im1hY2hpbmVfaWQiOiJNQ0gtMDA0IiwieCI6NTAsInkiOjUwLCJ3aWR0aCI6MTQwLCJoZWlnaHQiOjcwfSx7Im1hY2hpbmVfaWQiOiJNQ0gtMDA1IiwieCI6MjIwLCJ5Ijo1MCwid2lkdGgiOjE0MCwiaGVpZ2h0Ijo3MH0seyJtYWNoaW5lX2lkIjoiTUNILTAwNiIsIngiOjM5MCwieSI6NTAsIndpZHRoIjoxNDAsImhlaWdodCI6NzB9LHsibWFjaGluZV9pZCI6Ik1DSC0wMDciLCJ4Ijo1NjAsInkiOjUwLCJ3aWR0aCI6MTQwLCJoZWlnaHQiOjcwfSx7Im1hY2hpbmVfaWQiOiJNQ0gtMDA4IiwieCI6NTAsInkiOjE1MCwid2lkdGgiOjE0MCwiaGVpZ2h0Ijo3MH0seyJtYWNoaW5lX2lkIjoiTUNILTAwOSIsIngiOjIyMCwieSI6MTUwLCJ3aWR0aCI6MTQwLCJoZWlnaHQiOjcwfSx7Im1hY2hpbmVfaWQiOiJNQ0gtMDEwIiwieCI6MzkwLCJ5IjoxNTAsIndpZHRoIjoxNDAsImhlaWdodCI6NzB9LHsibWFjaGluZV9pZCI6Ik1DSC0wMTEiLCJ4Ijo1NjAsInkiOjE1MCwid2lkdGgiOjE0MCwiaGVpZ2h0Ijo3MH0seyJtYWNoaW5lX2lkIjoiTUNILTAxMiIsIngiOjUwLCJ5IjoyNTAsIndpZHRoIjoxNDAsImhlaWdodCI6NzB9LHsibWFjaGluZV9pZCI6Ik1DSC0wMTMiLCJ4IjoyMjAsInkiOjI1MCwid2lkdGgiOjE0MCwiaGVpZ2h0Ijo3MH0seyJtYWNoaW5lX2lkIjoiTUNILTAxNCIsIngiOjM5MCwieSI6MjUwLCJ3aWR0aCI6MTQwLCJoZWlnaHQiOjcwfSx7Im1hY2hpbmVfaWQiOiJNQ0gtMDE1IiwieCI6NTYwLCJ5IjoyNTAsIndpZHRoIjoxNDAsImhlaWdodCI6NzB9XSwiY29ubmVjdGlvbnMiOlt7ImZyb20iOnsieCI6MTkwLCJ5Ijo4NX0sInRvIjp7IngiOjIyMCwieSI6ODV9LCJ0eXBlIjoiY29udmV5b3IifSx7ImZyb20iOnsieCI6MzYwLCJ5Ijo4NX0sInRvIjp7IngiOjM5MCwieSI6ODV9LCJ0eXBlIjoiY29udmV5b3IifSx7ImZyb20iOnsieCI6NTMwLCJ5Ijo4NX0sInRvIjp7IngiOjU2MCwieSI6ODV9LCJ0eXBlIjoiY29udmV5b3IifSx7ImZyb20iOnsieCI6MTkwLCJ5IjoxODV9LCJ0byI6eyJ4IjoyMjAsInkiOjE4NX0sInR5cGUiOiJjb252ZXlvciJ9LHsiZnJvbSI6eyJ4IjozNjAsInkiOjE4NX0sInRvIjp7IngiOjM5MCwieSI6MTg1fSwidHlwZSI6ImNvbnZleW9yIn0seyJmcm9tIjp7IngiOjUzMCwieSI6MTg1fSwidG8iOnsieCI6NTYwLCJ5IjoxODV9LCJ0eXBlIjoiY29udmV5b3IifSx7ImZyb20iOnsieCI6MTkwLCJ5IjoyODV9LCJ0byI6eyJ4IjoyMjAsInkiOjI4NX0sInR5cGUiOiJjb252ZXlvciJ9LHsiZnJvbSI6eyJ4IjozNjAsInkiOjI4NX0sInRvIjp7IngiOjM5MCwieSI6Mjg1fSwidHlwZSI6ImNvbnZleW9yIn0seyJmcm9tIjp7IngiOjUzMCwieSI6Mjg1fSwidG8iOnsieCI6NTYwLCJ5IjoyODV9LCJ0eXBlIjoiY29udmV5b3IifSx7ImZyb20iOnsieCI6MTIwLCJ5IjoxMjB9LCJ0byI6eyJ4IjoxMjAsInkiOjE1MH0sInR5cGUiOiJjb252ZXlvciJ9LHsiZnJvbSI6eyJ4IjoyOTAsInkiOjEyMH0sInRvIjp7IngiOjI5MCwieSI6MTUwfSwidHlwZSI6ImNvbnZleW9yIn0seyJmcm9tIjp7IngiOjQ2MCwieSI6MTIwfSwidG8iOnsieCI6NDYwLCJ5IjoxNTB9LCJ0eXBlIjoiY29udmV5b3IifSx7ImZyb20iOnsieCI6MTIwLCJ5IjoyMjB9LCJ0byI6eyJ4IjoxMjAsInkiOjI1MH0sInR5cGUiOiJjb252ZXlvciJ9LHsiZnJvbSI6eyJ4IjoyOTAsInkiOjIyMH0sInRvIjp7IngiOjI5MCwieSI6MjUwfSwidHlwZSI6ImNvbnZleW9yIn0seyJmcm9tIjp7IngiOjQ2MCwieSI6MjIwfSwidG8iOnsieCI6NDYwLCJ5IjoyNTB9LCJ0eXBlIjoiY29udmV5b3IifV19"
   },
   {
     "id": 1755266250978,

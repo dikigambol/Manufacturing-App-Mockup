@@ -126,10 +126,30 @@
     border: 2px solid rgb(55, 65, 81);
     border-radius: 8px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    cursor: grab;
+    transition: all 0.2s ease-in-out;
 }
 
 .machine-layout-widget .react-flow__minimap:hover {
     border-color: rgb(59, 130, 246);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2), 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.machine-layout-widget .react-flow__minimap:active {
+    cursor: grabbing;
+    border-color: rgb(34, 211, 238);
+}
+
+/* MiniMap mask (viewport indicator) - make it more visible */
+.machine-layout-widget .react-flow__minimap-mask {
+    fill: rgba(59, 130, 246, 0.15);
+    stroke: rgb(59, 130, 246);
+    stroke-width: 2;
+}
+
+/* MiniMap nodes */
+.machine-layout-widget .react-flow__minimap-node {
+    cursor: pointer;
 }
 
 /* Info banner styling */

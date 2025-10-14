@@ -178,7 +178,7 @@ export const getSidebarData = (lineId) => {
           {
             title: 'Overview',
             url: '/dashboard/line_2',
-            id_dash: 1,
+            id_dash: 5,
             icon: BarChart3,
           },
         ]
