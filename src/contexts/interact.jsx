@@ -1,5 +1,6 @@
 import { local } from "@/utils/access";
 import { createContext, useEffect, useReducer } from "react";
+import { default_dash } from "@/utils/constant";
 
 export const LayoutContext = createContext(undefined);
 
@@ -72,15 +73,21 @@ export const LayoutProvider = ({ children }) => {
             );
 
             if (!dashboardExists) {
-                const newDashboard = {
+                // Try to load from default_dash first
+                const defaultDashboard = default_dash.find(
+                    (d) => d.id_dash === idDashTarget
+                );
+
+                const newDashboard = defaultDashboard || {
                     id_dash: idDashTarget,
                     component: [],
                     layout: [],
                 };
+
                 const updatedList = [...storedDashboard, newDashboard];
                 local.save("dashboard_list", updatedList);
-                dispatch({ type: "LAYOUT", data: [] });
-                dispatch({ type: "COMPONENT", data: [] });
+                dispatch({ type: "LAYOUT", data: newDashboard.layout || [] });
+                dispatch({ type: "COMPONENT", data: newDashboard.component || [] });
                 dispatch({ type: "DASHBOARD", data: [newDashboard] });
             } else {
                 const dashboardData = storedDashboard.find(

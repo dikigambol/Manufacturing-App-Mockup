@@ -12,7 +12,9 @@ import { BadgeX, Lock, LockOpen, Settings, Settings2 } from "lucide-react";
 import { lazy, Suspense, useContext, useEffect, useMemo, useState } from "react";
 
 const KPICard = lazy(() => import('./cards/KPICard'));
+const SimpleKPICard = lazy(() => import('./cards/SimpleKPICard'));
 const StatCard = lazy(() => import('./cards/StatCard'));
+const SimpleStatCard = lazy(() => import('./cards/SimpleStatCard'));
 
 const AppCard = ({ props, elementId }) => {
   const { layout, components, updateLayout, updateComponent } = useContext(LayoutContext)
@@ -58,7 +60,7 @@ const AppCard = ({ props, elementId }) => {
           <Suspense fallback={
             <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>Loading...</CardDescription>
           } key={item.i}>
-            {<KPICard {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
+            {<SimpleKPICard {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
           </Suspense>
         );
       }
@@ -68,7 +70,7 @@ const AppCard = ({ props, elementId }) => {
           <Suspense fallback={
             <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>Loading...</CardDescription>
           } key={item.i}>
-            {<StatCard {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
+            {<SimpleStatCard {...item.props} dataItem={dataById} /> || <CardDescription className='text-sm text-gray-500 flex items-center justify-center text-center h-full'>No content available</CardDescription>}
           </Suspense>
         );
       }
@@ -93,6 +95,8 @@ const AppCard = ({ props, elementId }) => {
                 });
                 setSheetFormValue('card_type', props?.card_type);
                 setSheetFormValue('id_resource_data', props?.id_resource_data);
+                setSheetFormValue('text_size', props?.text_size);
+                setSheetFormValue('value_color', props?.value_color);
                 setSheetOpen(true)
               }}>
                 <Settings2 />
@@ -278,6 +282,51 @@ function AppSheetChildren({ props, elementId }) {
                   </SelectGroup>
                 </SelectContent>
               </Select>
+
+              <SheetTitle className="mt-4">Style Configuration</SheetTitle>
+              <SheetDescription>Customize the appearance of your KPI card.</SheetDescription>
+
+              <Label htmlFor={elementId}>Text Size</Label>
+              <Select
+                defaultValue={props?.text_size ?? "normal"}
+                onValueChange={(value) => setSheetFormValue("text_size", value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select size" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Size Options</SelectLabel>
+                    <SelectItem value="small">Small (text-xl)</SelectItem>
+                    <SelectItem value="normal">Normal (text-2xl)</SelectItem>
+                    <SelectItem value="large">Large (text-4xl)</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+
+              <Label htmlFor={elementId}>Value Color</Label>
+              <Select
+                defaultValue={props?.value_color ?? "auto"}
+                onValueChange={(value) => setSheetFormValue("value_color", value === "auto" ? null : value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select color" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Color Options</SelectLabel>
+                    <SelectItem value="auto">Auto (based on title)</SelectItem>
+                    <SelectItem value="text-blue-400">Blue</SelectItem>
+                    <SelectItem value="text-green-400">Green</SelectItem>
+                    <SelectItem value="text-red-400">Red</SelectItem>
+                    <SelectItem value="text-yellow-400">Yellow</SelectItem>
+                    <SelectItem value="text-orange-400">Orange</SelectItem>
+                    <SelectItem value="text-purple-400">Purple</SelectItem>
+                    <SelectItem value="text-cyan-400">Cyan</SelectItem>
+                    <SelectItem value="text-white">White</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </>
           }
 
@@ -342,6 +391,51 @@ function AppSheetChildren({ props, elementId }) {
                   onChange={(e) => setSheetFormValue("title_2", e.target.value)}
                 />
               </div>
+
+              <SheetTitle className="mt-4">Style Configuration</SheetTitle>
+              <SheetDescription>Customize the appearance of your Stat card.</SheetDescription>
+
+              <Label htmlFor={elementId}>Text Size</Label>
+              <Select
+                defaultValue={props?.text_size ?? "normal"}
+                onValueChange={(value) => setSheetFormValue("text_size", value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select size" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Size Options</SelectLabel>
+                    <SelectItem value="small">Small (text-xl)</SelectItem>
+                    <SelectItem value="normal">Normal (text-3xl)</SelectItem>
+                    <SelectItem value="large">Large (text-4xl)</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+
+              <Label htmlFor={elementId}>Value Color</Label>
+              <Select
+                defaultValue={props?.value_color ?? "auto"}
+                onValueChange={(value) => setSheetFormValue("value_color", value === "auto" ? null : value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select color" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Color Options</SelectLabel>
+                    <SelectItem value="auto">Auto (based on title)</SelectItem>
+                    <SelectItem value="text-blue-400">Blue</SelectItem>
+                    <SelectItem value="text-green-400">Green</SelectItem>
+                    <SelectItem value="text-red-400">Red</SelectItem>
+                    <SelectItem value="text-yellow-400">Yellow</SelectItem>
+                    <SelectItem value="text-orange-400">Orange</SelectItem>
+                    <SelectItem value="text-purple-400">Purple</SelectItem>
+                    <SelectItem value="text-cyan-400">Cyan</SelectItem>
+                    <SelectItem value="text-white">White</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </>
           }
         </div>

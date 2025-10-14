@@ -154,6 +154,7 @@ const Widget = ({ props, elementId }) => {
                                 setSheetFormValue('id_resource_data', props?.id_resource_data);
                                 setSheetFormValue('template_id', props?.template_id);
                                 setSheetFormValue('template_name', props?.template_name);
+                                setSheetFormValue('variant', props?.variant);
                                 setSheetOpen(true)
                             }}>
                                 <Settings2 />
@@ -367,6 +368,31 @@ function AppSheetChildren({ props, elementId }) {
                         <>
                             <SheetTitle>OEE Donut Chart Configuration</SheetTitle>
                             <SheetDescription>This widget displays OEE metrics with breakdown (Availability, Performance, Quality) and production data (Cycle Time, Part OK, Part NG).</SheetDescription>
+
+                            {/* Variant Selector */}
+                            <div className="space-y-2">
+                                <Label>Display Variant</Label>
+                                <Select
+                                    value={sheetForm?.variant ?? props?.variant ?? 'compact'}
+                                    onValueChange={(value) => setSheetFormValue('variant', value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select variant" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Layout Options</SelectLabel>
+                                            <SelectItem value="compact">Compact (Vertical)</SelectItem>
+                                            <SelectItem value="expanded">Expanded (Horizontal)</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                                <p className="text-xs text-gray-500">
+                                    <span className="font-semibold">Compact:</span> Chart on top, metrics below (for smaller widgets)<br />
+                                    <span className="font-semibold">Expanded:</span> Chart on left, metrics on right (for larger widgets)
+                                </p>
+                            </div>
+
                             <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-xs text-blue-700 dark:text-blue-300">
                                 <p className="font-semibold mb-1">📊 Required Data Fields:</p>
                                 <ul className="list-disc list-inside space-y-1">

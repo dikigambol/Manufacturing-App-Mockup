@@ -18,6 +18,9 @@ import MaintenanceList from "@/pages/maintenance/MaintenanceList";
 import TraceabilityList from "@/pages/traceability/TraceabilityList";
 import LayoutDesigner from "@/pages/machine-layout-designer/LayoutDesigner";
 import MachineDetailPage from "@/pages/machines/MachineDetailPage";
+import DataManagement from "@/pages/settings/DataManagement";
+import UnderConstruction from "@/pages/common/UnderConstruction";
+import NotFound from "@/pages/common/NotFound";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router";
 import { SheetProvider } from "./contexts/sheet";
 import { SourceProvider } from "./contexts/source";
@@ -70,15 +73,18 @@ function App() {
                         <Route path="/dashboard/overview" element={<DashboardView />} />
                         <Route path="/dashboard/production" element={<DashboardView />} />
                         <Route path="/dashboard/machines" element={<DashboardView />} />
-                        <Route path="/dashboard/qc" element={<DashboardView />} />
-                        <Route path="/dashboard/inventory" element={<DashboardView />} />
-                        <Route path="/dashboard/maintenance" element={<DashboardView />} />
-                        <Route path="/dashboard/energy" element={<DashboardView />} />
-                        <Route path="/dashboard/operators" element={<DashboardView />} />
+
+                        {/* Analytics Pages - Under Construction */}
+                        <Route path="/dashboard/qc" element={<UnderConstruction />} />
+                        <Route path="/dashboard/inventory" element={<UnderConstruction />} />
+                        <Route path="/dashboard/maintenance" element={<UnderConstruction />} />
+                        <Route path="/dashboard/energy" element={<UnderConstruction />} />
+                        <Route path="/dashboard/operators" element={<UnderConstruction />} />
 
                         {/* Management pages */}
                         <Route path="/data-resources" element={<DataSource />} />
-                        <Route path="/settings" element={<DashboardView />} />
+                        <Route path="/settings" element={<DataManagement />} />
+                        <Route path="/settings/data-management" element={<DataManagement />} />
 
                         {/* Master Data Routes */}
                         <Route path="/master-data/access-level" element={<MasterDataAccessLevel />} />
@@ -100,7 +106,7 @@ function App() {
                     </Route>
 
                     {/* Default redirect */}
-                    <Route path="*" element={<Navigate to="/welcome" replace />} />
+                    <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter >
               </AlertProvider>

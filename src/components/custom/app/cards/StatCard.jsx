@@ -9,23 +9,28 @@ import {
 import { ChartContainer } from "@/components/ui/chart";
 
 export default function StatCard({ ...props }) {
+  // Safely extract data with fallbacks
+  const data1 = props?.dataItem?.fileData?.[props?.data_1] || 0;
+  const data2 = props?.dataItem?.fileData?.[props?.data_2] || 0;
+
   const chartData = [
-    { visitors: props?.dataItem.fileData[props?.data_2], fill: "#4966dcff" },
+    { visitors: Number(data2) || 0, fill: "#4966dcff" },
   ];
 
-  const target = props?.dataItem.fileData[props?.data_1];
-  const angleConvert = (chartData[0].visitors / target) * 360
+  const target = Number(data1) || 1; // Avoid division by zero
+  const angleConvert = target > 0 ? (chartData[0].visitors / target) * 360 : 0;
+
   return (
     <div className="px-3 ">
       {/* Bagian KPI Target & Actual */}
       <div className="flex justify-between">
         <div>
-          <p className="text-xs text-gray-500">{props?.title_1}</p>
-          <p className="text-sm font-semibold">{props?.dataItem.fileData[props?.data_1]}</p>
+          <p className="text-xs text-gray-500">{props?.title_1 || 'Total'}</p>
+          <p className="text-sm font-semibold">{data1}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500">{props?.title_2}</p>
-          <p className="text-sm font-semibold">{props?.dataItem.fileData[props?.data_2]}</p>
+          <p className="text-xs text-gray-500">{props?.title_2 || 'Value'}</p>
+          <p className="text-sm font-semibold">{data2}</p>
         </div>
       </div>
 
@@ -66,7 +71,7 @@ export default function StatCard({ ...props }) {
                           y={viewBox.cy}
                           className="fill-foreground text-xl font-bold"
                         >
-                          {chartData[0].visitors.toLocaleString()}
+                          {(chartData[0].visitors || 0).toLocaleString()}
                         </tspan>
                       </text>
                     );
