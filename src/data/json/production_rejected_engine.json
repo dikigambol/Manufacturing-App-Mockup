@@ -1,0 +1,37 @@
+[
+  {
+    "tanggal": "2025-08-09",
+    "produksi": 480,
+    "reject": 10
+  },
+  {
+    "tanggal": "2025-08-10",
+    "produksi": 500,
+    "reject": 15
+  },
+  {
+    "tanggal": "2025-08-11",
+    "produksi": 465,
+    "reject": 12
+  },
+  {
+    "tanggal": "2025-08-12",
+    "produksi": 490,
+    "reject": 9
+  },
+  {
+    "tanggal": "2025-08-13",
+    "produksi": 505,
+    "reject": 14
+  },
+  {
+    "tanggal": "2025-08-14",
+    "produksi": 495,
+    "reject": 8
+  },
+  {
+    "tanggal": "2025-08-15",
+    "produksi": 470,
+    "reject": 15
+  }
+]

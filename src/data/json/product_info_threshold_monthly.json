@@ -1,0 +1,74 @@
+[
+    {
+        "month": "Jan",
+        "production": 18,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Feb",
+        "production": 19,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Mar",
+        "production": 20,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Apr",
+        "production": 17,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "May",
+        "production": 26,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Jun",
+        "production": 19,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Jul",
+        "production": 21,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Aug",
+        "production": 14,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Sep",
+        "production": 19,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Oct",
+        "production": 18,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Nov",
+        "production": 27,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    },
+    {
+        "month": "Dec",
+        "production": 17,
+        "upper_threshold": 25,
+        "lower_threshold": 15
+    }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "type": "terpeleset",
+    "count": 5
+  },
+  {
+    "type": "terkena_alat",
+    "count": 8
+  },
+  {
+    "type": "terjatuh",
+    "count": 3
+  },
+  {
+    "type": "terjepit_mesin",
+    "count": 4
+  },
+  {
+    "type": "terbakar",
+    "count": 2
+  },
+  {
+    "type": "terkena_benda_tajam",
+    "count": 6
+  },
+  {
+    "type": "terpapar_bahan_kimia",
+    "count": 1
+  },
+  {
+    "type": "tersengat_listrik",
+    "count": 2
+  },
+  {
+    "type": "kecelakaan_kendaraan",
+    "count": 3
+  },
+  {
+    "type": "lainnya",
+    "count": 7
+  }
+]

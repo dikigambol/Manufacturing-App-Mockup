@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Dashboard Cache</title>
+</head>
+<body>
+    <h1>Clear Dashboard Cache</h1>
+    <button onclick="clearCache()">Clear Line 1 Dashboard Cache</button>
+    <div id="result"></div>
+    
+    <script>
+        function clearCache() {
+            // Clear all dashboard related localStorage
+            const keys = Object.keys(localStorage);
+            keys.forEach(key => {
+                if (key.includes('dashboard') || key.includes('line_1') || key.includes('id_dash_2')) {
+                    localStorage.removeItem(key);
+                    console.log('Removed:', key);
+                }
+            });
+            
+            document.getElementById('result').innerHTML = '<p style="color: green;">✅ Dashboard cache cleared! Please refresh your dashboard page.</p>';
+        }
+    </script>
+</body>
+</html>

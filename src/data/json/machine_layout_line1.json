@@ -1,0 +1,1 @@
+{"layout":[{"machine_id":"MCH-001","x":50,"y":100,"width":140,"height":70},{"machine_id":"MCH-002","x":220,"y":100,"width":140,"height":70},{"machine_id":"MCH-003","x":390,"y":100,"width":140,"height":70}],"connections":[{"from":{"x":190,"y":135},"to":{"x":220,"y":135},"type":"conveyor"},{"from":{"x":360,"y":135},"to":{"x":390,"y":135},"type":"conveyor"}]}

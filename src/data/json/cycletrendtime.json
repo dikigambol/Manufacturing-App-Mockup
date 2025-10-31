@@ -1,0 +1,34 @@
+[
+  {
+    "hour": "08:00",
+    "cycle_time": 5.2
+  },
+  {
+    "hour": "09:00",
+    "cycle_time": 5.0
+  },
+  {
+    "hour": "10:00",
+    "cycle_time": 4.8
+  },
+  {
+    "hour": "11:00",
+    "cycle_time": 5.5
+  },
+  {
+    "hour": "12:00",
+    "cycle_time": 6.0
+  },
+  {
+    "hour": "13:00",
+    "cycle_time": 5.1
+  },
+  {
+    "hour": "14:00",
+    "cycle_time": 4.9
+  },
+  {
+    "hour": "15:00",
+    "cycle_time": 5.3
+  }
+]

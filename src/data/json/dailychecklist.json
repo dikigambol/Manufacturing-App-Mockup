@@ -1,0 +1,42 @@
+[
+  {
+    "item": "APD (Alat Pelindung Diri) lengkap",
+    "status": "checked"
+  },
+  {
+    "item": "Area kerja bebas hambatan",
+    "status": "unchecked"
+  },
+  {
+    "item": "Tanda bahaya terlihat jelas",
+    "status": "unchecked"
+  },
+  {
+    "item": "Kotak P3K tersedia",
+    "status": "checked"
+  },
+  {
+    "item": "Pemadam kebakaran tersedia dan berfungsi",
+    "status": "checked"
+  },
+  {
+    "item": "Penerangan area kerja memadai",
+    "status": "unchecked"
+  },
+  {
+    "item": "Ventilasi dan sirkulasi udara baik",
+    "status": "checked"
+  },
+  {
+    "item": "Peralatan terkalibrasi dengan baik",
+    "status": "unchecked"
+  },
+  {
+    "item": "Lantai tidak licin dan bersih",
+    "status": "checked"
+  },
+  {
+    "item": "Rambu evakuasi terlihat jelas",
+    "status": "unchecked"
+  }
+]

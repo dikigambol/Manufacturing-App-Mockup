@@ -1,0 +1,34 @@
+[
+  {
+    "operator_id": "OP001",
+    "nama": "Budi",
+    "output_unit": 120,
+    "jam_kerja": 8,
+    "efisiensi_persen": 95.0,
+    "reject_rate_persen": 2.0
+  },
+  {
+    "operator_id": "OP002",
+    "nama": "Siti",
+    "output_unit": 115,
+    "jam_kerja": 8,
+    "efisiensi_persen": 92.0,
+    "reject_rate_persen": 3.0
+  },
+  {
+    "operator_id": "OP003",
+    "nama": "Agus",
+    "output_unit": 100,
+    "jam_kerja": 8,
+    "efisiensi_persen": 85.0,
+    "reject_rate_persen": 5.5
+  },
+  {
+    "operator_id": "OP004",
+    "nama": "Rina",
+    "output_unit": 90,
+    "jam_kerja": 8,
+    "efisiensi_persen": 80.0,
+    "reject_rate_persen": 7.0
+  }
+]

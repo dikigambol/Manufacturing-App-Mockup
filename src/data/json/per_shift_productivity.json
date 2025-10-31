@@ -1,0 +1,17 @@
+[
+  {
+    "shift": 1,
+    "produksi_unit": 520,
+    "reject_unit": 12
+  },
+  {
+    "shift": 2,
+    "produksi_unit": 480,
+    "reject_unit": 8
+  },
+  {
+    "shift": 3,
+    "produksi_unit": 450,
+    "reject_unit": 15
+  }
+]
